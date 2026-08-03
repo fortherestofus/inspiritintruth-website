@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   DESIGN TOKENS
+   ------------------------------------------------------------
+   Same warm monotone canvas as the ForTheRestOfUs studio site —
+   off-white bg, ink type, ink buttons — so the two sites read as
+   one family and the cross-links feel like one journey.
+
+   The difference: on FTROU the ISIT green is scoped to the app's
+   own pages. Here it is THE site accent, so it is set globally.
+   Colour still enters mostly through imagery; the green is for
+   live moments (links, focus rings, the giving split, small
+   markers), never as a section fill.
+   ============================================================ */
+:root {
+  --color-bg: #f6f5f1;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #eeebe3;
+  --color-text: #17150f;
+  --color-text-muted: #6f6a5e;
+  --color-text-faint: #a5a197;
+  --color-border: #e6e2d8;
+
+  /* InSpiritInTruth green — the app accent, promoted to site accent */
+  --color-accent: #90a842;
+  --color-accent-soft: rgba(144, 168, 66, 0.16);
+  --color-accent-ink: #ffffff;
+  --color-accent-deep: #4d6010;
+
+  /* Ink surfaces (dark CTA block, footer) */
+  --color-ink-surface: #141310;
+  --color-ink-surface-raised: #211e18;
+  --color-ink-text: #f4f2ec;
+  --color-ink-text-muted: #a49f92;
+  --color-ink-border: rgba(244, 242, 236, 0.12);
+
+  /* The 10% acts-of-kindness slice — deliberately not the accent */
+  --color-kindness: #e0645c;
+}
+
+.dark {
+  --color-bg: #141310;
+  --color-surface: #1d1b16;
+  --color-surface-sunken: #0f0e0c;
+  --color-text: #f4f2ec;
+  --color-text-muted: #a49f92;
+  --color-text-faint: #6f6a5e;
+  --color-border: rgba(244, 242, 236, 0.1);
+
+  /* Lifted for contrast on the dark canvas */
+  --color-accent: #a8c254;
+  --color-accent-soft: rgba(168, 194, 84, 0.16);
+  --color-accent-ink: #141310;
+  --color-accent-deep: #bcd473;
+
+  --color-ink-surface: #0b0a08;
+  --color-ink-surface-raised: #191712;
+  --color-ink-text: #f4f2ec;
+  --color-ink-text-muted: #a49f92;
+  --color-ink-border: rgba(244, 242, 236, 0.1);
+
+  --color-kindness: #e8837c;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-apfel), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  /* Apfel Grotezk has no italics — never synthesise them */
+  i,
+  em {
+    font-style: normal;
+  }
+}
+
+/* Hero word swap. Transform only, deliberately — see components/sections/Hero.tsx. */
+@keyframes wordIn {
+  from {
+    transform: translateY(0.45em);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Tabular figures for amounts and stats */
+  .nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* SVG feTurbulence noise — ink blocks and placeholder art only */
+  .grain {
+    position: relative;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    z-index: 0;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

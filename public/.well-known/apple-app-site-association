@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["Q796W2WJKD.com.fortherestofus.inspirit"],
+        "components": [{ "/": "/d/*" }, { "/": "/v/*" }]
+      }
+    ]
+  }
+}
