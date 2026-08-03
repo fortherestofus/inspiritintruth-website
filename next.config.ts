@@ -28,15 +28,13 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
 
+  // The Apple association file sets its own Content-Type from a route handler
+  // (app/.well-known/apple-app-site-association/route.ts) rather than here.
+  // A header rule was not enough: the file has no extension and Hostinger's CDN
+  // serves public/ directly, so the response went out with no Content-Type and
+  // none of these headers applied to it at all.
   async headers() {
-    return [
-      { source: "/(.*)", headers: securityHeaders },
-      // Apple refuses the association file unless it is served as JSON.
-      {
-        source: "/.well-known/apple-app-site-association",
-        headers: [{ key: "Content-Type", value: "application/json" }],
-      },
-    ];
+    return [{ source: "/(.*)", headers: securityHeaders }];
   },
 
   // Rewrite (not redirect) so the shared URL stays in the address bar and the
