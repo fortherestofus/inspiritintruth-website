@@ -12,21 +12,52 @@
  */
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Sprout } from "lucide-react";
+import { ArrowRight, Loader2, Sprout } from "lucide-react";
 import { GIVE } from "@/lib/content";
 import { GIVING, GIVING_SPLIT } from "@/lib/site";
 
 export default function Give() {
   const [amount, setAmount] = useState<number | "">(GIVING.quickAmounts[1]);
+  const [email, setEmail] = useState("");
   const [recurring, setRecurring] = useState(false);
   const [frequency, setFrequency] = useState(GIVING.frequencies[1].value);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const live = GIVING.provider !== "undecided" && Boolean(GIVING.url);
   const value = typeof amount === "number" && amount > 0 ? amount : null;
+  const ready = Boolean(value) && email.includes("@");
 
-  const ctaLabel = value
-    ? `Give ${GIVING.currency}${value}${recurring ? ` ${frequency}` : ""}`
-    : "Enter a gift amount";
+  const ctaLabel = !value
+    ? "Enter a gift amount"
+    : `Give ${GIVING.currency}${value}${recurring ? ` ${frequency}` : ""}`;
+
+  async function startGift() {
+    if (!ready || busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      // Trailing slash matters: next.config sets trailingSlash: true, so
+      // "/api/give" answers with a 308 to "/api/give/". A 308 does preserve
+      // the method and body, but posting straight to the canonical path skips
+      // a needless round trip and any client that mishandles the redirect.
+      const resp = await fetch("/api/give/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: value, email, recurring, frequency }),
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data?.url) {
+        setError(data?.error ?? "Could not start the gift just now.");
+        setBusy(false);
+        return;
+      }
+      // Hand off to Paystack's hosted checkout.
+      window.location.href = data.url;
+    } catch {
+      setError("Could not reach the payment service. Please try again.");
+      setBusy(false);
+    }
+  }
 
   return (
     <section id="give" className="scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
@@ -186,40 +217,66 @@ export default function Give() {
                 )}
               </div>
 
-              {/* ---- PAYMENT SLOT ---------------------------------------
-                  Placeholder until a provider is chosen. See lib/site.ts. */}
-              {live ? (
-                <a
-                  href={GIVING.url!}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`mt-6 flex w-full items-center justify-center gap-2 rounded-full py-4 font-medium transition-all duration-200 ${
-                    value
-                      ? "bg-accent text-accent-ink hover:-translate-y-0.5 hover:shadow-pill"
-                      : "pointer-events-none bg-sunken text-faint"
-                  }`}
+              {/* Email — Paystack needs it for the receipt, and it is the
+                  only way to reach a giver since there are no accounts here. */}
+              <div className="mt-6">
+                <label
+                  htmlFor="give-email"
+                  className="text-[0.8125rem] uppercase tracking-[0.14em] text-faint"
                 >
-                  {ctaLabel}
-                  {value && <ArrowRight className="h-4 w-4" />}
-                </a>
-              ) : (
-                <div className="mt-6">
-                  <div
-                    className="flex w-full items-center justify-center rounded-full border border-dashed border-border py-4 font-medium text-faint"
-                    aria-disabled="true"
-                  >
+                  Email for your receipt
+                </label>
+                <input
+                  id="give-email"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (error) setError(null);
+                  }}
+                  placeholder="you@example.com"
+                  className="mt-2 w-full rounded-full border border-border bg-bg px-5 py-3 text-ink outline-none transition-colors placeholder:text-faint focus:border-accent"
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={startGift}
+                disabled={!ready || busy}
+                className={`mt-5 flex w-full items-center justify-center gap-2 rounded-full py-4 font-medium transition-all duration-200 ${
+                  ready && !busy
+                    ? "bg-accent text-accent-ink hover:-translate-y-0.5 hover:shadow-pill"
+                    : "cursor-not-allowed bg-sunken text-faint"
+                }`}
+              >
+                {busy ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Taking you to checkout…
+                  </>
+                ) : (
+                  <>
                     {ctaLabel}
-                  </div>
-                  <p className="mt-3 text-center text-[0.8125rem] leading-relaxed text-faint">
-                    Web giving opens soon. Until then, giving lives in the
-                    InSpiritInTruth app.
-                  </p>
-                </div>
+                    {ready && <ArrowRight className="h-4 w-4" />}
+                  </>
+                )}
+              </button>
+
+              {error && (
+                <p
+                  role="alert"
+                  className="mt-3 text-center text-[0.875rem] leading-relaxed text-kindness"
+                >
+                  {error}
+                </p>
               )}
 
               <p className="mt-5 text-center text-[0.8125rem] leading-relaxed text-faint">
-                Gifts are processed in South African Rand. We never see or store
-                your card details.
+                Gifts are processed securely by Paystack in South African Rand.
+                We never see or store your card details.
               </p>
             </div>
 

@@ -32,31 +32,30 @@ export const APP_IS_LIVE = Boolean(STORE_LINKS.ios || STORE_LINKS.android);
 /* ============================================================
    GIVING
    ------------------------------------------------------------
-   The provider is undecided (Paystack vs Ko-fi vs something
-   else), so the give section renders a provider-shaped slot
-   instead of a payment form. Set `provider` and `url` when you
-   decide — the section switches from placeholder to live button
-   with no other edits.
+   Giving lives here on the website, not in the app. Paystack
+   because gifts are ZAR and Stripe does not operate in South
+   Africa.
 
-   Set `provider: "paystack"` and a payment-page URL, or
-   `provider: "kofi"` and your Ko-fi URL. Leave as "undecided"
-   to keep the placeholder.
+   The give card posts to /api/give, which talks to Paystack
+   server-side (PAYSTACK_SECRET_KEY never reaches the browser)
+   and returns a hosted checkout URL. Paystack redirects back to
+   /give/thanks/, which verifies the reference.
+
+   There is no database. Paystack's dashboard is the ledger.
    ============================================================ */
-export type GivingProvider = "undecided" | "paystack" | "kofi";
+export type GivingFrequency = "weekly" | "monthly" | "yearly";
 
 export const GIVING: {
-  provider: GivingProvider;
-  /** Hosted payment/checkout page the Give button opens. */
-  url: string | null;
+  /** True once PAYSTACK_SECRET_KEY is set on the host. */
+  enabled: boolean;
   /** Currency symbol shown against the amounts. */
   currency: string;
-  /** Quick-pick amounts, mirroring the app's giving flow. */
+  /** Quick-pick amounts, mirroring what the app used to offer. */
   quickAmounts: number[];
   /** Recurring cadences offered to a Keeper. */
-  frequencies: { value: "weekly" | "monthly" | "yearly"; label: string }[];
+  frequencies: { value: GivingFrequency; label: string }[];
 } = {
-  provider: "undecided",
-  url: null,
+  enabled: true,
   currency: "R",
   quickAmounts: [50, 100, 250, 500],
   frequencies: [

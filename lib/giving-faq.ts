@@ -3,9 +3,9 @@
  * (app/apps/inspiritintruth/giving/faq), converted to plain data so the
  * LegalDocument renderer can auto-link the emails.
  *
- * One deliberate change from the FTROU original: the payment-processor answer
- * no longer names Paystack, because the web giving provider is still being
- * decided. Update it once GIVING.provider is set in lib/site.ts.
+ * Kept in step with how giving actually works now: on this website, through
+ * Paystack, with no account and no local gift ledger. Answers that assumed an
+ * in-app giving profile have been corrected.
  */
 import { HELLO_EMAIL } from "@/lib/site";
 
@@ -23,7 +23,7 @@ export const GIVING_FAQ_SECTIONS = [
   {
     heading: "Do I get anything in return?",
     body: [
-      "No — and that's the point. Giving is a gift, not a purchase: it doesn't unlock features or content. (The app does have an optional Premium subscription — unlimited personalised devotionals and deeper reflections — but that's entirely separate from giving, and giving is never required for it.)",
+      "No — and that's the point. Giving is a gift, not a purchase: it doesn't unlock features or content, and it isn't required. (The app does have an optional Premium subscription — unlimited personalised devotionals and deeper reflections — but that's bought in the app through the App Store or Google Play, entirely separate from giving.)",
     ],
   },
   {
@@ -35,19 +35,19 @@ export const GIVING_FAQ_SECTIONS = [
   {
     heading: "Can I change or cancel a recurring gift?",
     body: [
-      `Anytime — there's no lock-in and no penalty. If you'd like a hand, email us at ${HELLO_EMAIL}.`,
+      `Anytime — there's no lock-in and no penalty. Paystack's subscription emails carry a link that lets you manage or cancel it yourself. If you'd rather we did it, email ${HELLO_EMAIL} and we will.`,
     ],
   },
   {
     heading: "How are payments handled?",
     body: [
-      "Securely, through a dedicated payment provider. We never see or store your card details. Gifts are processed in South African Rand (ZAR).",
+      "Securely, through Paystack. Your card details go straight to them — they never touch our servers, and we never see or store them. Gifts are processed in South African Rand (ZAR).",
     ],
   },
   {
     heading: "Will I get a receipt?",
     body: [
-      "Yes — we send it to the email on your giving profile. We'll also send the occasional note on the good your giving does, and nothing more.",
+      "Yes. Paystack emails it to the address you enter when you give, so put in one you actually read. That email address is the only thing we ask for.",
     ],
   },
   {
