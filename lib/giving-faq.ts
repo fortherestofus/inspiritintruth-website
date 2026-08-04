@@ -23,7 +23,7 @@ export const GIVING_FAQ_SECTIONS = [
   {
     heading: "Do I get anything in return?",
     body: [
-      "No — and that's the point. Giving is a gift, not a purchase: it doesn't unlock features or content, and it isn't required. (The app does have an optional Premium subscription — unlimited personalised devotionals and deeper reflections — but that's bought in the app through the App Store or Google Play, entirely separate from giving.)",
+      "No — and that's the point. Giving is a gift, not a purchase: it doesn't unlock features or content, and it isn't required. (The app does have an optional Premium subscription — unlimited tailored devotionals and deeper reflections — but that's bought in the app through the App Store or Google Play, entirely separate from giving.)",
     ],
   },
   {

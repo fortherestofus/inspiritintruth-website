@@ -71,10 +71,24 @@ export const GIVING_SPLIT = {
   kindness: 10,
 } as const;
 
-/** Pricing shown on the plans strip. Mirrors the App Store listing. */
+/**
+ * Pricing shown on the plans strip. Mirrors the App Store listing.
+ *
+ * LOCKED 2026-07-30 — $7.99/month, $59.99/year (37% off twelve months of
+ * monthly). See docs/DECISIONS.md in the app repo for the reasoning. The app
+ * itself never hardcodes a price (it reads the live store price through
+ * RevenueCat), so this file and the ForTheRestOfUs app entry are the only two
+ * places a stale number can survive. Change both together.
+ *
+ * The free column reads "Free", not "R0" — the app is priced in USD on the
+ * store, so a rand figure would be wrong as well as colder.
+ */
 export const PRICING = {
   freeLabel: "Free",
+  freePrice: "Free",
   premiumLabel: "Premium",
-  premiumPrice: "$6.99",
+  premiumPrice: "$7.99",
   premiumPeriod: "/mo",
+  premiumAnnual: "$59.99",
+  premiumAnnualNote: "or $59.99 a year — save 37%",
 } as const;

@@ -23,7 +23,7 @@ const apfel = localFont({
 });
 
 const SITE_DESCRIPTION =
-  "A real-life devotional app for imperfect journeys. Personalised devotionals rooted first in Scripture, a beautiful Bible reader, and a verse each day — for iOS and Android.";
+  "A real-life devotional app for imperfect journeys. Tailored devotionals rooted first in Scripture, a beautiful Bible reader, and a verse each day — for iOS and Android.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "devotional app",
     "daily devotional",
     "Bible app",
-    "personalised devotional",
+    "tailored devotional",
     "Christian app",
     "Bible study",
     "daily verse",

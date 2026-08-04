@@ -7,7 +7,7 @@ import { PRICING } from "@/lib/site";
 
 const FREE = [
   "The weekly devotional",
-  "Three personalised devotionals to start",
+  "Three tailored devotionals to start",
   "The full Bible reader, multiple versions",
   "A verse each day",
   "Bookmarks, notes and reading plans",
@@ -16,7 +16,7 @@ const FREE = [
 
 const PREMIUM = [
   "Everything in Free",
-  "Unlimited personalised devotionals",
+  "Unlimited tailored devotionals",
   "Deeper reflections",
   "Support the work directly",
 ];
@@ -38,7 +38,7 @@ export default function Pricing() {
               {PRICING.freeLabel}
             </p>
             <p className="mt-4 text-[2.5rem] font-medium leading-none tracking-[-0.03em] text-ink">
-              R0
+              {PRICING.freePrice}
             </p>
             <p className="mt-3 text-muted">No ads. No algorithm. No catch.</p>
             <ul className="mt-7 space-y-3">
@@ -63,7 +63,9 @@ export default function Pricing() {
               </span>
               <span className="text-muted">{PRICING.premiumPeriod}</span>
             </p>
-            <p className="mt-3 text-muted">Cancel anytime, from your app store.</p>
+            <p className="mt-3 text-muted">
+              {PRICING.premiumAnnualNote}. Cancel anytime, from your app store.
+            </p>
             <ul className="mt-7 space-y-3">
               {PREMIUM.map((item) => (
                 <li key={item} className="flex gap-3 text-ink">

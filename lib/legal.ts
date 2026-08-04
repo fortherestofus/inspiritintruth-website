@@ -31,7 +31,7 @@ export const PRIVACY_SECTIONS = [
     bullets: [
       "We do not sell your personal information. Not to advertisers, not to anyone.",
       "There are no ads in InSpiritInTruth, and no ad tracking.",
-      "What you write when you ask for a personalised devotional is used to write that devotional, and to show it back to you later. It is not used to train anyone's AI model.",
+      "What you write when you ask for a tailored devotional is used to write that devotional, and to show it back to you later. It is not used to train anyone's AI model.",
       "You can read, export, correct or permanently delete everything we hold about you, at any time.",
       "The rest of this document is the detail behind those four statements.",
     ],
@@ -52,7 +52,7 @@ export const PRIVACY_SECTIONS = [
     ],
     bullets: [
       "Account information — your email address, and your name or display name if you give one. If you sign in with Apple or Google we receive a unique identifier and the email you choose to share, including Apple's private relay address if you opt to hide your real one. We never receive your Apple or Google password.",
-      "What you share for a personalised devotional — the words you write when you tell the app what you are going through, feeling, facing or curious about. This is the most sensitive thing we hold and it has its own section below.",
+      "What you share for a tailored devotional — the words you write when you tell the app what you are going through, feeling, facing or curious about. This is the most sensitive thing we hold and it has its own section below.",
       "Your practice in the app — devotionals you read or save, verses you bookmark, notes and reflections you write, reading plans you follow, your streak, and the topics you explore.",
       "Subscription records — whether your account has an active Premium subscription, so the app knows what to unlock. We never see or store your full card number, CVV, or bank details.",
       "Technical information — device type, operating system version, app version, language and region, crash and error diagnostics, and your notification token if you turn notifications on. We use this to keep the app working, not to build a profile of you.",
@@ -73,7 +73,7 @@ export const PRIVACY_SECTIONS = [
     heading: "How we use your information",
     bullets: [
       "To create your account, sign you in and keep it secure.",
-      "To write personalised devotionals from what you share, and to show them to you again later in your library.",
+      "To write tailored devotionals from what you share, and to show them to you again later in your library.",
       "To keep your bookmarks, notes, plans and streak in sync across your devices.",
       "To send the notifications you have asked for, and nothing else. You choose whether to receive them and can turn them off at any time, in the app or in your device settings.",
       "To keep your Premium subscription in step across your devices, and to honour cancellations.",
@@ -86,7 +86,7 @@ export const PRIVACY_SECTIONS = [
     id: "the-ai",
     heading: "The AI that writes your devotionals",
     body: [
-      "Personalised devotionals are generated using Claude, a large language model provided by Anthropic. When you ask for one, the text you wrote is sent to Anthropic's API together with our instructions and the scripture references involved, and the devotional comes back to us and then to you.",
+      "Tailored devotionals are generated using Claude, a large language model provided by Anthropic. When you ask for one, the text you wrote is sent to Anthropic's API together with our instructions and the scripture references involved, and the devotional comes back to us and then to you.",
       "Anthropic processes that text on our behalf as our service provider. Under our commercial terms with them, your text is not used to train their models. We do not use it to train any model either, and we do not sell or share it.",
       "AI gets things wrong. Every devotional follows a fixed template and is checked by our system, and we review the content that goes out. Scripture is always the first and governing source. If something reads as off, unbiblical, or simply wrong, please tell us at " +
         HELLO_EMAIL +
@@ -102,7 +102,7 @@ export const PRIVACY_SECTIONS = [
     ],
     bullets: [
       "Supabase — accounts, authentication, and the database where your devotionals, notes, bookmarks and preferences are stored.",
-      "Anthropic — generates personalised devotionals from the text you share, as described above.",
+      "Anthropic — generates tailored devotionals from the text you share, as described above.",
       "API.Bible and helloao — supply the Bible text you read. Passage requests are served without an account, and we do not send them anything that identifies you.",
       "RevenueCat — manages Premium subscription status across platforms.",
       "Paystack — processes gifts made on our website. You give Paystack an email address for the receipt and your card details go directly to them; neither reaches our servers, and we keep no record of the gift ourselves. Paystack's own privacy terms govern what they hold.",
@@ -159,7 +159,7 @@ export const PRIVACY_SECTIONS = [
       "Deletion — have your information erased, as described above.",
       "Portability — receive your devotionals, notes and bookmarks in a machine-readable format.",
       "Objection and restriction — object to a particular use, or ask us to pause it.",
-      "Withdraw consent — stop the personalised-devotional feature processing what you share, at any time, without affecting anything done before you withdrew.",
+      "Withdraw consent — stop the tailored-devotional feature processing what you share, at any time, without affecting anything done before you withdrew.",
       `To exercise any of these, email ${LEGAL_EMAIL}.`,
       "If we do not resolve it, you may complain to the Information Regulator of South Africa (inforegulator.org.za), or to your local data protection authority if you are in the UK or EU.",
     ],
@@ -190,7 +190,7 @@ export const TERMS_SECTIONS = [
     id: "the-app",
     heading: "The app",
     body: [
-      `InSpiritInTruth is a devotional app: a weekly devotional, personalised devotionals written from what you share, a Bible reader, a daily verse, and somewhere to keep bookmarks and notes. It is operated by ${STUDIO} from Johannesburg, South Africa.`,
+      `InSpiritInTruth is a devotional app: a weekly devotional, tailored devotionals written from what you share, a Bible reader, a daily verse, and somewhere to keep bookmarks and notes. It is operated by ${STUDIO} from Johannesburg, South Africa.`,
       "We offer it for personal, devotional and non-commercial use.",
     ],
   },
@@ -216,7 +216,7 @@ export const TERMS_SECTIONS = [
     id: "ai-content",
     heading: "AI-written devotionals — use your judgement",
     body: [
-      "Personalised devotionals are generated by AI (Anthropic's Claude) working from what you share, our template, and Scripture. Every one is checked by our system and reviewed by us, but AI can still produce something inaccurate, poorly judged, or theologically off.",
+      "Tailored devotionals are generated by AI (Anthropic's Claude) working from what you share, our template, and Scripture. Every one is checked by our system and reviewed by us, but AI can still produce something inaccurate, poorly judged, or theologically off.",
       "Scripture is the authority, not the devotional. Read anything the app writes with discernment, weigh it against the Bible, and where it matters, against the counsel of people you trust. You rely on AI-generated content at your own discretion, and we are not liable for decisions you make on the strength of it.",
       `Tell us when something is wrong — ${HELLO_EMAIL}. We would much rather hear it.`,
     ],
@@ -256,7 +256,7 @@ export const TERMS_SECTIONS = [
     id: "premium",
     heading: "Premium subscriptions",
     body: [
-      "Some features, including unlimited personalised devotionals, require a paid Premium subscription. Prices are shown in the app before you buy.",
+      "Some features, including unlimited tailored devotionals, require a paid Premium subscription. Prices are shown in the app before you buy.",
       "Subscriptions bought through the App Store or Google Play are billed by Apple or Google under their terms. They renew automatically at the end of each period unless you cancel at least 24 hours before it ends, and you manage or cancel them in your Apple or Google account settings — not through us.",
       "Refunds for store purchases are handled by Apple or Google under their policies. We will help where we can, but we cannot issue a refund for a payment we did not take.",
       "We may change what Premium includes or what it costs. If a price goes up, we will tell you before it applies to you, and you can cancel.",

@@ -56,7 +56,7 @@ export const STORY = [
 export const INSIDE = [
   {
     icon: "Sparkles",
-    title: "Personalised devotionals",
+    title: "Tailored devotionals",
     body: "Built from what you share, rooted first and always in Scripture.",
   },
   {
@@ -151,14 +151,14 @@ export const GIVE = {
 export const FAQ = [
   {
     q: "Is InSpiritInTruth free?",
-    a: "The heart of it is. The weekly devotional, the full Bible reader, daily verses, bookmarks and notes cost nothing, and every reader gets three personalised devotionals to start. An optional Premium subscription makes those unlimited and adds deeper reflections.",
+    a: "Yes — free to download and free to use. The weekly devotional, the full Bible reader, daily verses, bookmarks and notes cost nothing and always will, and every reader gets three tailored devotionals to start. An optional Premium subscription ($7.99 a month, or $59.99 a year) makes those unlimited and adds deeper reflections.",
   },
   {
-    q: "How many personalised devotionals do I get for free?",
+    q: "How many tailored devotionals do I get for free?",
     a: "Three — yours to keep, with no time limit on when you use them. They're a one-time welcome rather than a weekly or monthly allowance, so once you've written all three, Premium is what makes them unlimited. Everything else in the app carries on unchanged.",
   },
   {
-    q: "How are the personalised devotionals written?",
+    q: "How are the tailored devotionals written?",
     a: "You share what you're going through and a devotional is written for that moment — drawing on Scripture first, then trusted voices like Matthew Henry's commentary and writers like C.S. Lewis. Every one follows a careful template, is checked by our system, and then by us.",
   },
   {
@@ -167,7 +167,7 @@ export const FAQ = [
   },
   {
     q: "Is giving the same as subscribing?",
-    a: "No — they're entirely separate. Giving is a gift that funds the work and never unlocks anything. Premium is an optional subscription for unlimited personalised devotionals. Giving is never required for it.",
+    a: "No — they're entirely separate. Giving is a gift that funds the work and never unlocks anything. Premium is an optional subscription for unlimited tailored devotionals. Giving is never required for it.",
   },
   {
     q: "Can I cancel anytime?",
