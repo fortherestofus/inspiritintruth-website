@@ -1,14 +1,18 @@
 "use client";
 
 /**
- * Giving — composed like the app's give screen: a hero amount card
+ * Support — composed like the app's giving screen: a hero amount card
  * (superscript currency + large numeral), quick amounts, and the Keeper card
  * with a frequency row.
  *
- * The payment step is deliberately a SLOT, not a form. The web giving provider
- * is undecided, so while GIVING.provider is "undecided" the CTA renders as a
- * clearly-marked placeholder. Set `provider` and `url` in lib/site.ts and the
- * same button becomes a real link — no other edit needed.
+ * The verb is aimed at the work rather than at us. Apple treats "tip the
+ * developer" and "donate to a cause" as different categories with different
+ * rules, and the fundraising one — collect outside the app, via the browser —
+ * is exactly the architecture here. The nouns stay charitable ("your gift",
+ * "Where your gift goes") for the same reason.
+ *
+ * Posts to /api/give, which talks to Paystack server-side and returns a hosted
+ * checkout URL.
  */
 import { useState } from "react";
 import Link from "next/link";
@@ -29,7 +33,7 @@ export default function Give() {
 
   const ctaLabel = !value
     ? "Enter a gift amount"
-    : `Give ${GIVING.currency}${value}${recurring ? ` ${frequency}` : ""}`;
+    : `Support the work · ${GIVING.currency}${value}${recurring ? ` ${frequency}` : ""}`;
 
   async function startGift() {
     if (!ready || busy) return;
@@ -178,7 +182,7 @@ export default function Give() {
                         type="button"
                         role="switch"
                         aria-checked={recurring}
-                        aria-label="Give regularly"
+                        aria-label="Support regularly"
                         onClick={() => setRecurring((v) => !v)}
                         className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
                           recurring ? "bg-accent" : "bg-border"

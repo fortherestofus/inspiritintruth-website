@@ -130,7 +130,7 @@ export const NOTE_FROM_ALROY = {
 
 /** Giving — condensed from the FTROU giving page, styled like the app's flow. */
 export const GIVE = {
-  eyebrow: "Giving",
+  eyebrow: "Support",
   title: "You can help keep this going.",
   body:
     "InSpiritInTruth is built with care — the devotionals, the Bible, the daily verses. If it's meant something to you, a gift funds the work behind it and helps it reach more hearts.",

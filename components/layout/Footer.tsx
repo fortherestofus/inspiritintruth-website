@@ -40,7 +40,7 @@ export default function Footer() {
                 How it&rsquo;s made
               </a>
               <a href="#give" className="text-ink-muted transition-colors hover:text-ink-text">
-                Giving
+                Support
               </a>
               <a href="#faq" className="text-ink-muted transition-colors hover:text-ink-text">
                 FAQ

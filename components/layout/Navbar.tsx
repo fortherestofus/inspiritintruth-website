@@ -12,7 +12,7 @@ import { Menu, X } from "lucide-react";
 const LINKS = [
   { href: "#inside", label: "Inside" },
   { href: "#how-made", label: "How it's made" },
-  { href: "#give", label: "Give" },
+  { href: "#give", label: "Support" },
   { href: "#faq", label: "FAQ" },
 ];
 
