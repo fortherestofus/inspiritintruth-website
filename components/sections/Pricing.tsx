@@ -7,6 +7,7 @@ import { PRICING } from "@/lib/site";
 
 const FREE = [
   "The weekly devotional",
+  "Three personalised devotionals to start",
   "The full Bible reader, multiple versions",
   "A verse each day",
   "Bookmarks, notes and reading plans",

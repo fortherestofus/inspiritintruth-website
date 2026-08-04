@@ -151,7 +151,11 @@ export const GIVE = {
 export const FAQ = [
   {
     q: "Is InSpiritInTruth free?",
-    a: "Yes. The weekly devotional, the full Bible reader, daily verses, bookmarks and notes are all free. An optional Premium subscription adds unlimited personalised devotionals and deeper reflections.",
+    a: "The heart of it is. The weekly devotional, the full Bible reader, daily verses, bookmarks and notes cost nothing, and every reader gets three personalised devotionals to start. An optional Premium subscription makes those unlimited and adds deeper reflections.",
+  },
+  {
+    q: "How many personalised devotionals do I get for free?",
+    a: "Three — yours to keep, with no time limit on when you use them. They're a one-time welcome rather than a weekly or monthly allowance, so once you've written all three, Premium is what makes them unlimited. Everything else in the app carries on unchanged.",
   },
   {
     q: "How are the personalised devotionals written?",
