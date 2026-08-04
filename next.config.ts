@@ -34,7 +34,33 @@ const nextConfig: NextConfig = {
   // serves public/ directly, so the response went out with no Content-Type and
   // none of these headers applied to it at all.
   async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders }];
+    return [
+      { source: "/(.*)", headers: securityHeaders },
+
+      // HTML documents must not be cached for a year.
+      //
+      // Next stamps prerendered pages with `s-maxage=31536000`, on the
+      // assumption that the CDN in front of it is purged on every deploy.
+      // Hostinger's CDN is not: a copy change went live in the build but the
+      // homepage kept serving 26-hour-old HTML from the edge, and a
+      // cache-busting query string did not shift it either.
+      //
+      // So HTML gets a short shared cache with a long stale-while-revalidate:
+      // still served instantly from the edge, but revalidated within minutes
+      // of a deploy instead of a year later. The negative lookahead keeps
+      // immutable build assets and images on their own long-lived caching —
+      // those are content-hashed and genuinely safe to keep for a year.
+      {
+        source:
+          "/((?!_next/static|_next/image|screenshots|icons|fonts|\\.well-known).*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, s-maxage=300, stale-while-revalidate=86400",
+          },
+        ],
+      },
+    ];
   },
 
   // Rewrite (not redirect) so the shared URL stays in the address bar and the
