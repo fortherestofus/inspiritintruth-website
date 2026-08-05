@@ -18,10 +18,10 @@ export default function Story() {
               <p className="text-[0.8125rem] uppercase tracking-[0.14em] text-accent-deep">
                 {block.eyebrow}
               </p>
-              <h2 className="mt-4 text-balance text-[1.75rem] font-medium leading-[1.15] tracking-[-0.02em] text-ink sm:text-[2.25rem]">
+              <h2 className="mt-4 text-balance text-[1.75rem] font-medium leading-[1.15] tracking-[-0.02em] text-ink sm:text-[2.25rem] lg:text-[2.75rem]">
                 {block.title}
               </h2>
-              <p className="mt-5 max-w-lg text-pretty text-lg leading-relaxed text-muted">
+              <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted lg:text-xl">
                 {block.body}
               </p>
             </div>

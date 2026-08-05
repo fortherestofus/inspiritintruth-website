@@ -52,6 +52,48 @@ export const STORY = [
   },
 ] as const;
 
+/**
+ * The tailored-devotional journey, shown with real captures from a real run —
+ * LTE, 15% battery, honest confession and all. We seek God randomly; the
+ * point is honesty, not polish, so these screenshots stay as taken.
+ */
+export const JOURNEY = {
+  eyebrow: "How it actually happens",
+  title: "From what you share to what you read.",
+  intro:
+    "A real run, captured as it happened. You say something honest, it takes you seriously, and two minutes later you are reading a devotional written for exactly that.",
+  steps: [
+    {
+      label: "You tell it",
+      caption:
+        "Whatever you are feeling or facing, in your own words. Messy is fine.",
+      image: "/screenshots/isit-journey-share.jpg",
+      time: "08:25",
+    },
+    {
+      label: "It names where you are",
+      caption:
+        "Before the devotional, it reflects back what you shared — so you know it actually listened.",
+      image: "/screenshots/isit-journey-named.jpg",
+      time: "08:25",
+    },
+    {
+      label: "You read",
+      caption:
+        "A full devotional — title, scripture, reflection — written for that exact moment.",
+      image: "/screenshots/isit-journey-read.jpg",
+      time: "08:27",
+    },
+  ],
+  timeNote: "Shared at 08:25. Reading by 08:27.",
+  excerpt: {
+    lead: "From that exact devotional:",
+    text:
+      "A God who is not fickle does not toy. What can look like divine whiplash, from inside the pain, is often something else entirely: a world that is genuinely fallen, employers who make decisions for reasons that have nothing to do with your worth, an economy or circumstance that is simply broken in ways Scripture never denies. God opening a door doesn’t insulate that door from a fallen world’s storms. It means He was present in giving it, and He remains present in its loss.",
+    source: "Why Does It Feel Like God Won’t Let Me Be Happy?",
+  },
+} as const;
+
 /** WHAT'S INSIDE, straight from copy.md. */
 export const INSIDE = [
   {
