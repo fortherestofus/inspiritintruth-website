@@ -1,4 +1,16 @@
-import type { NextConfig } from "next";
+// Plain ESM, deliberately — NOT next.config.ts.
+//
+// Next has to transpile a TypeScript config before it can read it, and it does
+// that with its native binary, writing the result to a temporary
+// <hash>.next.config file. On the Hostinger build container that step failed
+// (the log reported a GLIBC mismatch alongside "cannot find
+// 6a730267af9b7.next.config"), so the temp file was never produced and the
+// build died looking for it. No such file exists in this repo — it was Next's
+// own artifact, and its absence was the symptom rather than the cause.
+//
+// A .mjs config sidesteps the whole thing: Node loads it directly, no
+// transpile, no native binary, no temp file. Types still come from the JSDoc
+// annotation below, so editor support is unchanged.
 
 // Baseline security headers applied to every route. Mirrors the FTROU studio
 // site; no CSP yet for the same reason (inline styles need their own pass).
@@ -23,7 +35,8 @@ const securityHeaders = [
 const SHARE_LINK_FN =
   "https://xjhkvphnxzuqookjqkjc.supabase.co/functions/v1/share-link";
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   // Server-mode build (so `next start` works on Hostinger), same as FTROU.
   trailingSlash: true,
   images: { unoptimized: true },
