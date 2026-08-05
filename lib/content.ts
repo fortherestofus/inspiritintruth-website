@@ -53,9 +53,9 @@ export const STORY = [
 ] as const;
 
 /**
- * The tailored-devotional journey, shown with real captures from a real run —
- * LTE, 15% battery, honest confession and all. We seek God randomly; the
- * point is honesty, not polish, so these screenshots stay as taken.
+ * The tailored-devotional journey, shown with real captures from one real run
+ * — WiFi, 72% battery, an honest confession and all. We seek God randomly; the
+ * point is honesty, not polish, so these screenshots stay exactly as taken.
  */
 export const JOURNEY = {
   eyebrow: "How it actually happens",
@@ -68,29 +68,36 @@ export const JOURNEY = {
       caption:
         "Whatever you are feeling or facing, in your own words. Messy is fine.",
       image: "/screenshots/isit-journey-share.jpg",
-      time: "08:25",
+      time: "15:14",
     },
     {
       label: "It names where you are",
       caption:
         "Before the devotional, it reflects back what you shared — so you know it actually listened.",
       image: "/screenshots/isit-journey-named.jpg",
-      time: "08:25",
+      time: "15:15",
+    },
+    {
+      label: "You choose the depth",
+      caption:
+        "A quick moment or a deeper sit. The devotional is written to the time you actually have.",
+      image: "/screenshots/isit-journey-time.jpg",
+      time: "15:15",
     },
     {
       label: "You read",
       caption:
         "A full devotional — title, scripture, reflection — written for that exact moment.",
       image: "/screenshots/isit-journey-read.jpg",
-      time: "08:27",
+      time: "15:16",
     },
   ],
-  timeNote: "Shared at 08:25. Reading by 08:27.",
+  timeNote: "Shared at 15:14. Reading by 15:16.",
   excerpt: {
     lead: "From that exact devotional:",
     text:
-      "A God who is not fickle does not toy. What can look like divine whiplash, from inside the pain, is often something else entirely: a world that is genuinely fallen, employers who make decisions for reasons that have nothing to do with your worth, an economy or circumstance that is simply broken in ways Scripture never denies. God opening a door doesn’t insulate that door from a fallen world’s storms. It means He was present in giving it, and He remains present in its loss.",
-    source: "Why Does It Feel Like God Won’t Let Me Be Happy?",
+      "Living in a broken world means loss visits the faithful and unfaithful alike. Ecclesiastes is unflinching about this — the same events happen to all. This isn’t a comforting truth in the moment, but it is a freeing one: suffering is not proof of divine rejection. It is proof of living in a world still groaning, waiting for restoration (Romans 8:22).",
+    source: "When God Feels Absent (Even Though You Know the Word)",
   },
 } as const;
 

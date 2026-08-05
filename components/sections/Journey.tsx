@@ -1,7 +1,7 @@
 /**
  * Journey — the tailored-devotional flow shown with real captures from one
  * real run. Story beat 2 makes the promise; this section is the proof. The
- * screenshots stay exactly as taken (LTE, 15% battery, 08:25 on the clock):
+ * screenshots stay exactly as taken (WiFi, 72% battery, 15:14 on the clock):
  * we seek God randomly, and honesty is the point.
  */
 import Phone from "@/components/ui/Phone";
@@ -21,8 +21,8 @@ export default function Journey() {
           {JOURNEY.intro}
         </p>
 
-        {/* The three steps, numbered */}
-        <div className="mt-14 grid gap-12 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+        {/* The four steps, numbered */}
+        <div className="mt-14 grid gap-12 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-6">
           {JOURNEY.steps.map((step, i) => (
             <div key={step.label} className="flex flex-col">
               <Phone src={step.image} alt={step.label} className="max-w-[240px]" />
