@@ -23,13 +23,18 @@ export default function Vision() {
           <figcaption className="mt-4 text-accent-deep">{VISION.verseRef}</figcaption>
         </figure>
 
-        <div className="mx-auto mt-12 max-w-reading space-y-4">
+        {/* Stays centred with the verse: the two read as one statement of
+            intent, so splitting the alignment mid-column only looked like
+            broken centring. Held narrower than the reading column because
+            centred lines get harder to track the longer they run. */}
+        <div className="mx-auto mt-12 max-w-[38rem] space-y-4 text-center">
           <p className="text-pretty text-lg leading-relaxed text-ink">{VISION.body}</p>
           <p className="text-pretty leading-relaxed text-muted">{VISION.backstory}</p>
         </div>
 
-        {/* Note from Alroy */}
-        <div className="mx-auto mt-16 max-w-reading rounded-block border border-border bg-surface p-8 shadow-card sm:p-12">
+        {/* Note from Alroy — left-aligned, and far enough down that the change
+            reads as a new voice rather than a stray paragraph. */}
+        <div className="mx-auto mt-20 max-w-reading rounded-block border border-border bg-surface p-8 shadow-card sm:p-12">
           <p className="text-[0.8125rem] uppercase tracking-[0.14em] text-faint">
             {NOTE_FROM_ALROY.eyebrow}
           </p>
