@@ -41,7 +41,7 @@ export const STORY = [
     title: "Tell it what is going on. It writes for that.",
     body:
       "When the weekly devotional is not the thing you need, describe what you are feeling or facing and get a personal, scripture-rooted reflection written for that moment. Not a generic prepared study that may or may not meet your need.",
-    image: "/screenshots/isit-personalise.jpg",
+    image: "/screenshots/isit-personalise-2.jpg",
   },
   {
     eyebrow: "The whole Bible, in hand",
@@ -67,28 +67,28 @@ export const JOURNEY = {
       label: "You tell it",
       caption:
         "Whatever you are feeling or facing, in your own words. Messy is fine.",
-      image: "/screenshots/isit-journey-share.jpg",
+      image: "/screenshots/isit-journey-share-2.jpg",
       time: "15:14",
     },
     {
       label: "It names where you are",
       caption:
         "Before the devotional, it reflects back what you shared — so you know it actually listened.",
-      image: "/screenshots/isit-journey-named.jpg",
+      image: "/screenshots/isit-journey-named-2.jpg",
       time: "15:15",
     },
     {
       label: "You choose the depth",
       caption:
         "A quick moment or a deeper sit. The devotional is written to the time you actually have.",
-      image: "/screenshots/isit-journey-time.jpg",
+      image: "/screenshots/isit-journey-time-2.jpg",
       time: "15:15",
     },
     {
       label: "You read",
       caption:
         "A full devotional — title, scripture, reflection — written for that exact moment.",
-      image: "/screenshots/isit-journey-read.jpg",
+      image: "/screenshots/isit-journey-read-2.jpg",
       time: "15:16",
     },
   ],

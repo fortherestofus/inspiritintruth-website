@@ -61,11 +61,17 @@ const nextConfig = {
       // So HTML gets a short shared cache with a long stale-while-revalidate:
       // still served instantly from the edge, but revalidated within minutes
       // of a deploy instead of a year later. The negative lookahead keeps
-      // immutable build assets and images on their own long-lived caching —
-      // those are content-hashed and genuinely safe to keep for a year.
+      // immutable build assets on their own long-lived caching — those are
+      // content-hashed and genuinely safe to keep for a year.
+      //
+      // /screenshots is deliberately NOT excluded. Those filenames are stable
+      // while their contents get replaced, so a year-long cache serves the
+      // previous screenshot from the same URL — which is precisely what
+      // happened when the tailored-devotional captures were swapped and the
+      // old ones kept showing for everyone who had already loaded the page.
       {
         source:
-          "/((?!_next/static|_next/image|screenshots|icons|fonts|\\.well-known).*)",
+          "/((?!_next/static|_next/image|icons|fonts|\\.well-known).*)",
         headers: [
           {
             key: "Cache-Control",
