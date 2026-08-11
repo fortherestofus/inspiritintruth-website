@@ -221,7 +221,7 @@ export const GIVE = {
   report: {
     title: "You'll hear where it went",
     body:
-      "Every rand of the kindness half is published on our kindness ledger — what it paid for, who received it, and what is still being held. Everyone who gives gets an email when there is something new on it. We hold back a name when someone's dignity asks for it. We never hold back the numbers.",
+      "The kindness ledger is public and always current — what each rand paid for, who received it, and what is still being held. You don't have to wait for us to tell you. When there is news worth sending, givers get it by newsletter too. We hold back a name when someone's dignity asks for it. We never hold back the numbers.",
   },
   /**
    * The subscription tithe. Lives here as well as on the pricing strip because

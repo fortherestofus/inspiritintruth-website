@@ -10,8 +10,9 @@
  *  ledger.
  *
  *  GIVEN comes from Supabase. No API knows that R850 became a month of
- *  groceries — only a person does. Entries are written in the Supabase table
- *  editor, which is already an admin UI, so there is none to build here.
+ *  groceries — only a person does. Entries are written on the Kindness ledger
+ *  page of the ISIT admin panel, behind the same password gate as everything
+ *  else there.
  *
  * HELD is the difference, and is shown rather than netted away: money received
  * and not yet given is a fact about us.
@@ -153,6 +154,8 @@ export const KINDNESS_PAGE = {
     "We could not load this just now. It is a problem on our side, not a sign that the fund is empty — please try again shortly.",
   heldNote:
     "Received and not yet given. It sits in its own account until there is something worth doing with it.",
+  newsletter:
+    "This page is the record, and it is always current — nothing here waits on a newsletter going out. Givers also get a newsletter when there is news worth sending.",
   /**
    * Held goes negative whenever we give ahead of what has settled, which is a
    * normal thing to do and not an error. Saying so beats showing a minus sign

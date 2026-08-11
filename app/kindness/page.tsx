@@ -85,6 +85,10 @@ export default async function KindnessPage() {
           ))}
         </div>
 
+        <p className="mt-4 max-w-reading text-pretty leading-relaxed text-muted">
+          {KINDNESS_PAGE.newsletter}
+        </p>
+
         <div className="mt-8 max-w-reading rounded-well border border-border bg-surface p-6">
           <h2 className="font-medium text-ink">
             {KINDNESS_PAGE.notACharity.title}
