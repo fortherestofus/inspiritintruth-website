@@ -48,7 +48,7 @@ export const PRIVACY_SECTIONS = [
     id: "what-we-collect",
     heading: "What we collect",
     body: [
-      "We collect four kinds of information, and only what the app actually needs to work.",
+      "We collect the following kinds of information, and only what we actually need. Most of it comes from using the app; the last one only applies if you give on our website.",
     ],
     bullets: [
       "Account information — your email address, and your name or display name if you give one. If you sign in with Apple or Google we receive a unique identifier and the email you choose to share, including Apple's private relay address if you opt to hide your real one. We never receive your Apple or Google password.",
@@ -56,6 +56,7 @@ export const PRIVACY_SECTIONS = [
       "Your practice in the app — devotionals you read or save, verses you bookmark, notes and reflections you write, reading plans you follow, your streak, and the topics you explore.",
       "Subscription records — whether your account has an active Premium subscription, so the app knows what to unlock. We never see or store your full card number, CVV, or bank details.",
       "Technical information — device type, operating system version, app version, language and region, crash and error diagnostics, and your notification token if you turn notifications on. We use this to keep the app working, not to build a profile of you.",
+      "Giving details — if you give on our website, your first name, surname and email address. We ask for a name so a receipt, a reply, or the email telling you where the kindness share went can address you as a person rather than an inbox. These are held by Paystack, our payment processor, not on our own servers. Giving is entirely optional and none of it is linked to your app account.",
     ],
   },
   {
@@ -105,7 +106,7 @@ export const PRIVACY_SECTIONS = [
       "Anthropic — generates tailored devotionals from the text you share, as described above.",
       "API.Bible and helloao — supply the Bible text you read. Passage requests are served without an account, and we do not send them anything that identifies you.",
       "RevenueCat — manages Premium subscription status across platforms.",
-      "Paystack — processes gifts made on our website. You give Paystack an email address for the receipt and your card details go directly to them; neither reaches our servers, and we keep no record of the gift ourselves. Paystack's own privacy terms govern what they hold.",
+      "Paystack — processes gifts made on our website. Your first name, surname and email address are stored against a Paystack customer record so gifts, receipts and our kindness-report email can reach the right person; your card details go directly to Paystack. None of it reaches our own servers, and we keep no separate record of the gift. Paystack's own privacy terms govern what they hold.",
       "Apple and Google — process subscription payments made through their stores under their own terms, and deliver push notifications.",
       "Expo — delivers push notifications to your device.",
       "We may also disclose information where the law genuinely requires it, to protect someone's safety, or to a buyer if the app is ever transferred — in which case this policy travels with it and we will tell you first.",
@@ -268,7 +269,7 @@ export const TERMS_SECTIONS = [
     body: [
       "Giving is a gift, not a purchase. It does not unlock features, it is never required, and it buys you nothing. It funds the work behind the app, and 10% of it goes to acts of kindness — donations to people and organisations doing good for others.",
       `${STUDIO} is not a registered public-benefit organisation, so gifts are not tax-deductible and we cannot issue a tax certificate.`,
-      `Giving happens on this website, through Paystack, and never inside the app. You give an email address for the receipt and nothing more; there is no account to create.`,
+      `Giving happens on this website, through Paystack, and never inside the app. You give your first name, surname and an email address — the name so we can thank you, reply to you, and tell you where the kindness share went by name rather than by inbox. There is no account to create, and none of it is linked to your app account.`,
       `Recurring gifts can be changed or cancelled at any time, with no penalty — Paystack's subscription emails carry a link to do it yourself. Because a gift is voluntary and nothing is supplied in return, gifts are generally non-refundable, but if you gave by mistake or something went wrong, email ${HELLO_EMAIL} and we will sort it out.`,
     ],
   },

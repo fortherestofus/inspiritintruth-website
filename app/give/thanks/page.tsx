@@ -9,7 +9,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, CircleAlert } from "lucide-react";
-import { HELLO_EMAIL, GIVING } from "@/lib/site";
+import { HELLO_EMAIL, GIVING, GIVING_SPLIT } from "@/lib/site";
+import { GIVE } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -82,10 +83,38 @@ export default async function ThanksPage({
               Your gift{amount ? ` of ${amount}` : ""} came through. A receipt is
               on its way to your email.
             </p>
-            <p className="mt-4 text-pretty leading-relaxed text-muted">
-              Most of it funds the work behind InSpiritInTruth, and 10% goes to
-              acts of kindness. We&rsquo;ll share where it lands.
-            </p>
+            {/* The same breakdown as the give card, not a summary of it —
+                this is the moment a giver is most owed the detail. */}
+            <div className="mt-10 space-y-7 border-t border-border pt-8">
+              {[
+                { ...GIVE.where.work, share: GIVING_SPLIT.work },
+                { ...GIVE.where.kindness, share: GIVING_SPLIT.kindness },
+              ].map((band) => (
+                <div key={band.label}>
+                  <h2 className="flex items-baseline gap-3 font-medium text-ink">
+                    <span className="nums text-accent-deep">{band.share}%</span>
+                    {band.label}
+                  </h2>
+                  <ul className="mt-3 space-y-2">
+                    {band.items.map((item) => (
+                      <li
+                        key={item}
+                        className="text-pretty leading-relaxed text-muted before:mr-3 before:text-faint before:content-['—']"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-well border border-border bg-surface p-6">
+              <h2 className="font-medium text-ink">{GIVE.report.title}</h2>
+              <p className="mt-2 text-pretty leading-relaxed text-muted">
+                {GIVE.report.body}
+              </p>
+            </div>
           </>
         ) : verdict === "failed" ? (
           <>

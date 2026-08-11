@@ -47,6 +47,8 @@ export async function POST(request: Request) {
 
   let body: {
     amount?: unknown;
+    firstName?: unknown;
+    lastName?: unknown;
     email?: unknown;
     recurring?: unknown;
     frequency?: unknown;
@@ -58,10 +60,21 @@ export async function POST(request: Request) {
   }
 
   const amount = Number(body.amount);
+  // Capped rather than rejected on length: a long name is a real name, and
+  // refusing someone's own name over a character count is not a hill worth
+  // dying on. The cap only stops an unbounded string reaching Paystack.
+  const firstName = String(body.firstName ?? "").trim().slice(0, 80);
+  const lastName = String(body.lastName ?? "").trim().slice(0, 80);
   const email = String(body.email ?? "").trim().toLowerCase();
   const recurring = Boolean(body.recurring);
   const frequency = String(body.frequency ?? "monthly");
 
+  if (!firstName || !lastName) {
+    return NextResponse.json(
+      { error: "Enter your first name and surname." },
+      { status: 400 },
+    );
+  }
   if (!EMAIL.test(email)) {
     return NextResponse.json(
       { error: "Enter a valid email address so we can send your receipt." },
@@ -85,12 +98,60 @@ export async function POST(request: Request) {
 
   const amountMinor = Math.round(amount * 100); // ZAR → cents
 
+  // Put the name on the customer record before initialising.
+  //
+  // transaction/initialize accepts first_name/last_name, but Paystack only
+  // applies them when it has to create the customer — a giver who has given
+  // before keeps whatever name the record already had, which for anyone who
+  // gave before this form asked for one is no name at all. POST /customer
+  // is likewise create-or-fetch, not upsert, so the PUT is what actually
+  // writes. Neither call is allowed to block the gift: a name that fails to
+  // save is a worse outcome than nothing only if it takes the gift with it.
+  try {
+    const custResp = await fetch(`${PAYSTACK}/customer`, {
+      method: "POST",
+      headers: psHeaders,
+      body: JSON.stringify({
+        email,
+        first_name: firstName,
+        last_name: lastName,
+      }),
+    });
+    const cust = await custResp.json();
+    const code = cust?.data?.customer_code;
+    if (code) {
+      await fetch(`${PAYSTACK}/customer/${code}`, {
+        method: "PUT",
+        headers: psHeaders,
+        body: JSON.stringify({ first_name: firstName, last_name: lastName }),
+      });
+    }
+  } catch {
+    // Carry on — the name still travels in metadata below.
+  }
+
+  // first_name/last_name are Paystack's own customer fields, so the name
+  // lands on the customer record rather than only in free-form metadata —
+  // that is what its receipts, subscription emails and dashboard read.
   const init: Record<string, unknown> = {
     email,
+    first_name: firstName,
+    last_name: lastName,
     amount: amountMinor,
     currency: CURRENCY,
     callback_url: `${SITE_URL}/give/thanks/`,
-    metadata: { source: "website", recurring },
+    metadata: {
+      source: "website",
+      recurring,
+      // Shown on the Paystack transaction page as labelled rows.
+      custom_fields: [
+        {
+          display_name: "Name",
+          variable_name: "name",
+          value: `${firstName} ${lastName}`,
+        },
+      ],
+    },
   };
 
   // Recurring → create a plan on the fly and subscribe the giver to it.

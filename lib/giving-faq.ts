@@ -17,7 +17,15 @@ export const GIVING_FAQ_SECTIONS = [
   {
     heading: "Where does my gift go?",
     body: [
-      "Two places. Most of it funds the work behind InSpiritInTruth — building new features, keeping the quality high, and creating the devotional content itself: the design, the writing, the servers. And 10% of all giving goes to acts of kindness: donations to people and organisations doing good for others.",
+      "Two places, and we would rather be specific than reassuring.",
+      "90% funds the work: the hours of building, fixing and maintaining the app; the running costs — hosting, the Bible text licences, and the AI behind tailored devotionals; writing and checking every devotional; and making the app better over time.",
+      "10% goes to acts of kindness: charities and churches doing good in their communities, and people we are pointed to who need help with living expenses, school fees, or a bill that came at the wrong time.",
+    ],
+  },
+  {
+    heading: "How will I know where the 10% went?",
+    body: [
+      "We email you. Everyone who gives gets a note showing what the kindness share paid for and where it landed. We hold back a name when someone's dignity asks for it — we never hold back the numbers.",
     ],
   },
   {
@@ -47,7 +55,7 @@ export const GIVING_FAQ_SECTIONS = [
   {
     heading: "Will I get a receipt?",
     body: [
-      "Yes. Paystack emails it to the address you enter when you give, so put in one you actually read. That email address is the only thing we ask for.",
+      "Yes. Paystack emails it to the address you enter when you give, so put in one you actually read. We ask for your name and email and nothing else — no address, no phone number, no account to create.",
     ],
   },
   {

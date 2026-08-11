@@ -22,6 +22,8 @@ import { GIVING, GIVING_SPLIT } from "@/lib/site";
 
 export default function Give() {
   const [amount, setAmount] = useState<number | "">(GIVING.quickAmounts[1]);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [recurring, setRecurring] = useState(false);
   const [frequency, setFrequency] = useState(GIVING.frequencies[1].value);
@@ -33,7 +35,11 @@ export default function Give() {
   // prefill the field. /api/give checks the same bounds server-side.
   const inRange =
     value !== null && value >= GIVING.minAmount && value <= GIVING.maxAmount;
-  const ready = inRange && email.includes("@");
+  const ready =
+    inRange &&
+    email.includes("@") &&
+    firstName.trim() !== "" &&
+    lastName.trim() !== "";
 
   const ctaLabel = !value
     ? "Enter a gift amount"
@@ -53,7 +59,14 @@ export default function Give() {
       const resp = await fetch("/api/give/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: value, email, recurring, frequency }),
+        body: JSON.stringify({
+          amount: value,
+          firstName,
+          lastName,
+          email,
+          recurring,
+          frequency,
+        }),
       });
       const data = await resp.json();
       if (!resp.ok || !data?.url) {
@@ -88,36 +101,65 @@ export default function Give() {
               {GIVE.splitIntro}
             </p>
 
+            <h3 className="mt-10 text-[0.8125rem] uppercase tracking-[0.14em] text-faint">
+              {GIVE.where.title}
+            </h3>
+
             {/* 90/10 split */}
-            <div className="mt-8 flex h-4 overflow-hidden rounded-full">
+            <div className="mt-4 flex h-4 overflow-hidden rounded-full">
               <div className="bg-accent" style={{ flex: GIVING_SPLIT.work }} />
               <div
                 className="ml-1 rounded-full bg-kindness"
                 style={{ flex: GIVING_SPLIT.kindness }}
               />
             </div>
-            <div className="mt-4 space-y-3">
-              <div className="flex items-center">
-                <span className="h-2.5 w-2.5 rounded-full bg-accent" />
-                <span className="ml-3 flex-1 text-ink">
-                  Building the app &amp; its content
-                </span>
-                <span className="nums font-medium text-ink">
-                  {GIVING_SPLIT.work}%
-                </span>
-              </div>
-              <div className="flex items-center">
-                <span className="h-2.5 w-2.5 rounded-full bg-kindness" />
-                <span className="ml-3 flex-1 text-ink">
-                  Acts of kindness &mdash; helping others
-                </span>
-                <span className="nums font-medium text-ink">
-                  {GIVING_SPLIT.kindness}%
-                </span>
-              </div>
+            {/* Each share is itemised. A bar and a percentage say how much;
+                only the list says what it actually pays for. */}
+            <div className="mt-6 space-y-7">
+              {[
+                {
+                  ...GIVE.where.work,
+                  share: GIVING_SPLIT.work,
+                  dot: "bg-accent",
+                },
+                {
+                  ...GIVE.where.kindness,
+                  share: GIVING_SPLIT.kindness,
+                  dot: "bg-kindness",
+                },
+              ].map((band) => (
+                <div key={band.label}>
+                  <div className="flex items-center">
+                    <span className={`h-2.5 w-2.5 rounded-full ${band.dot}`} />
+                    <span className="ml-3 flex-1 font-medium text-ink">
+                      {band.label}
+                    </span>
+                    <span className="nums font-medium text-ink">
+                      {band.share}%
+                    </span>
+                  </div>
+                  <ul className="ml-[1.4rem] mt-3 space-y-2">
+                    {band.items.map((item) => (
+                      <li
+                        key={item}
+                        className="text-pretty leading-relaxed text-muted before:mr-3 before:text-faint before:content-['—']"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
 
             <div className="mt-8 rounded-well border border-border bg-surface p-6">
+              <h3 className="font-medium text-ink">{GIVE.report.title}</h3>
+              <p className="mt-2 text-pretty leading-relaxed text-muted">
+                {GIVE.report.body}
+              </p>
+            </div>
+
+            <div className="mt-5 rounded-well border border-border bg-surface p-6">
               <h3 className="font-medium text-ink">{GIVE.notAPurchase.title}</h3>
               <p className="mt-2 text-pretty leading-relaxed text-muted">
                 {GIVE.notAPurchase.body}
@@ -220,7 +262,10 @@ export default function Give() {
                         }`}
                       >
                         <span
-                          className={`absolute top-0.5 h-5 w-5 rounded-full bg-surface shadow-sm transition-transform ${
+                          // left-0 is load-bearing: without it the knob takes
+                          // its static position, which a button centres — so
+                          // "off" sat mid-track and "on" hung off the end.
+                          className={`absolute left-0 top-0.5 h-5 w-5 rounded-full bg-surface shadow-sm transition-transform ${
                             recurring ? "translate-x-[1.375rem]" : "translate-x-0.5"
                           }`}
                         />
@@ -252,9 +297,58 @@ export default function Give() {
                 )}
               </div>
 
+              {/* Name — so the kindness report and any reply can address a
+                  real person rather than an inbox. Paystack stores it against
+                  the customer, which is also what its receipts and
+                  subscription emails use. */}
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="give-first-name"
+                    className="text-[0.8125rem] uppercase tracking-[0.14em] text-faint"
+                  >
+                    First name
+                  </label>
+                  <input
+                    id="give-first-name"
+                    type="text"
+                    autoComplete="given-name"
+                    required
+                    value={firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                      if (error) setError(null);
+                    }}
+                    placeholder="Thabo"
+                    className="mt-2 w-full rounded-full border border-border bg-bg px-5 py-3 text-ink outline-none transition-colors placeholder:text-faint focus:border-accent"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="give-last-name"
+                    className="text-[0.8125rem] uppercase tracking-[0.14em] text-faint"
+                  >
+                    Surname
+                  </label>
+                  <input
+                    id="give-last-name"
+                    type="text"
+                    autoComplete="family-name"
+                    required
+                    value={lastName}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                      if (error) setError(null);
+                    }}
+                    placeholder="Mokoena"
+                    className="mt-2 w-full rounded-full border border-border bg-bg px-5 py-3 text-ink outline-none transition-colors placeholder:text-faint focus:border-accent"
+                  />
+                </div>
+              </div>
+
               {/* Email — Paystack needs it for the receipt, and it is the
                   only way to reach a giver since there are no accounts here. */}
-              <div className="mt-6">
+              <div className="mt-4">
                 <label
                   htmlFor="give-email"
                   className="text-[0.8125rem] uppercase tracking-[0.14em] text-faint"

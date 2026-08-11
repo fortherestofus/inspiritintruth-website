@@ -184,7 +184,42 @@ export const GIVE = {
   body:
     "InSpiritInTruth is built with care — the devotionals, the Bible, the daily verses. If it's meant something to you, a gift funds the work behind it and helps it reach more hearts.",
   splitIntro:
-    "Every gift does two things. Most of it funds the work — building new features, keeping the quality high, and creating the devotional content itself. And 10% goes to acts of kindness: donations to people and organisations doing good for others. We'll share where it lands.",
+    "Every gift does two things, and you should be able to see both. 90% funds the work — the hours, the running costs, the devotional content, and making it better over time. The other 10% goes to acts of kindness, and we write and tell you where it landed.",
+  /**
+   * "Most of it funds the work" was true and told a giver nothing — it reads
+   * as overhead, which is exactly what a charity-literate reader hears. Naming
+   * the costs on both sides is the whole point: the work IS the thing being
+   * funded, and the kindness share has real recipients.
+   */
+  where: {
+    title: "Where your gift goes",
+    work: {
+      label: "The work",
+      items: [
+        "Development — the hours of building, fixing and maintaining the app",
+        "Running costs — hosting, the Bible text licences, and the AI behind tailored devotionals",
+        "The devotionals themselves — writing every one, and checking every one",
+        "Making it better — new features, faster, and higher quality over time",
+      ],
+    },
+    kindness: {
+      label: "Acts of kindness",
+      items: [
+        "Charities and churches doing good in their communities",
+        "People we are pointed to — help with living expenses, school fees, a bill that came at the wrong time",
+        "Whatever else lands in front of us that we can actually do something about",
+      ],
+    },
+  },
+  /**
+   * A promise with a delivery mechanism, not a vague "we'll share". If this
+   * email stops going out, the copy is a lie — that is deliberate.
+   */
+  report: {
+    title: "You'll hear where it went",
+    body:
+      "Everyone who gives gets an email showing what the kindness share paid for and where it landed. We hold back a name when someone's dignity asks for it. We never hold back the numbers.",
+  },
   /**
    * Labels the amount field. Says both routes out loud — typing and the
    * presets — because the hero numeral looks like a figure we chose unless
