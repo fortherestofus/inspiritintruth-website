@@ -50,8 +50,8 @@ export default function Navbar() {
           <Image
             src="/icons/logo-lockup-ink.png"
             alt="InSpiritInTruth"
-            width={420}
-            height={100}
+            width={1742}
+            height={232}
             priority
             className="h-7 w-auto dark:hidden"
           />
@@ -59,8 +59,8 @@ export default function Navbar() {
             src="/icons/logo-lockup-cream.png"
             alt=""
             aria-hidden
-            width={420}
-            height={100}
+            width={1742}
+            height={232}
             priority
             className="hidden h-7 w-auto dark:block"
           />

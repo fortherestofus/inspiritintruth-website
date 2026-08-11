@@ -18,8 +18,8 @@ export default function Footer() {
             <Image
               src="/icons/logo-lockup-cream.png"
               alt="InSpiritInTruth"
-              width={420}
-              height={100}
+              width={1742}
+              height={232}
               className="h-8 w-auto"
             />
             <p className="mt-4 text-pretty leading-relaxed text-ink-muted">
