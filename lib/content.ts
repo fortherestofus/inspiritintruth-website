@@ -184,7 +184,7 @@ export const GIVE = {
   body:
     "InSpiritInTruth is built with care — the devotionals, the Bible, the daily verses. If it's meant something to you, a gift funds the work behind it and helps it reach more hearts.",
   splitIntro:
-    "Every gift does two things, and you should be able to see both. 90% funds the work — the hours, the running costs, the devotional content, and making it better over time. The other 10% goes to acts of kindness, and we write and tell you where it landed.",
+    "Every gift splits in half. Half keeps the work going. Half goes to someone who needs it — and every cent of that half reaches them, because the cost of getting it there comes out of our half, not theirs.",
   /**
    * "Most of it funds the work" was true and told a giver nothing — it reads
    * as overhead, which is exactly what a charity-literate reader hears. Naming
@@ -212,13 +212,33 @@ export const GIVE = {
     },
   },
   /**
+   * The pass-through promise, borrowed in structure from charity: water's 100%
+   * model — the claim only means something because the two halves are kept
+   * apart. Admin, fees and anyone's time come out of the work half.
+   */
+  passThrough: {
+    title: "Every cent of that half arrives",
+    body:
+      "Transfer fees, the driving, the phone calls, anyone's time — all of it comes out of the half that funds the work. Nothing is deducted from the half that goes to a person or a cause. It is the only promise here that we can be held to cent for cent, so it is the one we make.",
+  },
+  /**
    * A promise with a delivery mechanism, not a vague "we'll share". If this
    * email stops going out, the copy is a lie — that is deliberate.
    */
   report: {
     title: "You'll hear where it went",
     body:
-      "Everyone who gives gets an email showing what the kindness share paid for and where it landed. We hold back a name when someone's dignity asks for it. We never hold back the numbers.",
+      "Everyone who gives gets an email showing what the kindness half paid for and where it landed. We hold back a name when someone's dignity asks for it. We never hold back the numbers.",
+  },
+  /**
+   * The subscription tithe. Lives here as well as on the pricing strip because
+   * the give card is where someone is weighing whether giving is the only way
+   * to take part — and it is not.
+   */
+  subscriptionTithe: {
+    title: "Premium tithes too",
+    body:
+      "A tenth of what reaches us from every Premium subscription — after Apple and Google take their cut — joins the same kindness fund, and is reported the same way. You don't have to give to give.",
   },
   /**
    * Labels the amount field. Says both routes out loud — typing and the

@@ -105,7 +105,7 @@ export default function Give() {
               {GIVE.where.title}
             </h3>
 
-            {/* 90/10 split */}
+            {/* The split, as a bar */}
             <div className="mt-4 flex h-4 overflow-hidden rounded-full">
               <div className="bg-accent" style={{ flex: GIVING_SPLIT.work }} />
               <div
@@ -152,10 +152,31 @@ export default function Give() {
               ))}
             </div>
 
-            <div className="mt-8 rounded-well border border-border bg-surface p-6">
+            {/* Tinted, because it is the one claim here that can be checked
+                cent for cent — it should not sit at the same weight as the
+                rest. */}
+            <div className="mt-8 rounded-well border border-accent bg-accent-soft p-6">
+              <h3 className="font-medium text-accent-deep">
+                {GIVE.passThrough.title}
+              </h3>
+              <p className="mt-2 text-pretty leading-relaxed text-ink">
+                {GIVE.passThrough.body}
+              </p>
+            </div>
+
+            <div className="mt-5 rounded-well border border-border bg-surface p-6">
               <h3 className="font-medium text-ink">{GIVE.report.title}</h3>
               <p className="mt-2 text-pretty leading-relaxed text-muted">
                 {GIVE.report.body}
+              </p>
+            </div>
+
+            <div className="mt-5 rounded-well border border-border bg-surface p-6">
+              <h3 className="font-medium text-ink">
+                {GIVE.subscriptionTithe.title}
+              </h3>
+              <p className="mt-2 text-pretty leading-relaxed text-muted">
+                {GIVE.subscriptionTithe.body}
               </p>
             </div>
 

@@ -18,14 +18,21 @@ export const GIVING_FAQ_SECTIONS = [
     heading: "Where does my gift go?",
     body: [
       "Two places, and we would rather be specific than reassuring.",
-      "90% funds the work: the hours of building, fixing and maintaining the app; the running costs — hosting, the Bible text licences, and the AI behind tailored devotionals; writing and checking every devotional; and making the app better over time.",
-      "10% goes to acts of kindness: charities and churches doing good in their communities, and people we are pointed to who need help with living expenses, school fees, or a bill that came at the wrong time.",
+      "Half funds the work: the hours of building, fixing and maintaining the app; the running costs — hosting, the Bible text licences, and the AI behind tailored devotionals; writing and checking every devotional; and making the app better over time.",
+      "Half goes to acts of kindness: charities and churches doing good in their communities, and people we are pointed to who need help with living expenses, school fees, or a bill that came at the wrong time.",
+      "Every cent of the kindness half reaches a person or a cause. Transfer fees, travel and anyone's time come out of the work half — it is deducted from our side, never from theirs.",
     ],
   },
   {
-    heading: "How will I know where the 10% went?",
+    heading: "How will I know where the kindness half went?",
     body: [
-      "We email you. Everyone who gives gets a note showing what the kindness share paid for and where it landed. We hold back a name when someone's dignity asks for it — we never hold back the numbers.",
+      "We email you. Everyone who gives gets a note showing what the kindness half paid for and where it landed. We hold back a name when someone's dignity asks for it — we never hold back the numbers.",
+    ],
+  },
+  {
+    heading: "Does Premium give to the kindness fund as well?",
+    body: [
+      "Yes. A tenth of what reaches us from every Premium subscription — after Apple and Google take their commission — joins the same kindness fund and is reported in the same email. We tithe on what actually arrives rather than on profit, because a profit figure is something you would have to take our word for.",
     ],
   },
   {

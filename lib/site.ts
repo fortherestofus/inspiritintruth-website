@@ -74,11 +74,35 @@ export const GIVING: {
   ],
 };
 
-/** The 90/10 split shown on the giving section and FAQ. */
+/**
+ * The gift split shown on the giving section, the thank-you page and the FAQ.
+ *
+ * WAS 90/10, CHANGED 2026-08-11 to 50/50. The old ratio was defensible against
+ * every business benchmark — 1% for the Planet members pledge 1% of sales — but
+ * it was the wrong comparison. Premium is what funds the work; a gift is what
+ * someone gives *beyond* that, or instead of it. Once that is true, a gift
+ * weighted 90% to the work is answering a question nobody asked.
+ *
+ * 50/50 is also the only ratio that survives being said out loud: "half keeps
+ * the work going, half goes to someone who needs it."
+ */
 export const GIVING_SPLIT = {
-  work: 90,
-  kindness: 10,
+  work: 50,
+  kindness: 50,
 } as const;
+
+/**
+ * Share of Premium income that joins the kindness fund — a tithe on the
+ * subscription, not only on gifts.
+ *
+ * Levied on what REACHES US, after Apple and Google take their commission.
+ * Deliberately not "of profit": a profit pledge is unverifiable and every
+ * reader knows it, which is why 1% for the Planet and Patagonia both moved to
+ * revenue. It is also the sustainable shape — a proportional share shrinks in
+ * a bad month, so it can slow the climb to break-even but can never turn a
+ * profit into a loss the way a fixed pledge could.
+ */
+export const SUBSCRIPTION_TITHE = 10;
 
 /**
  * Pricing shown on the plans strip. Mirrors the App Store listing.

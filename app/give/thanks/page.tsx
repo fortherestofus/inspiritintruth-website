@@ -109,7 +109,16 @@ export default async function ThanksPage({
               ))}
             </div>
 
-            <div className="mt-8 rounded-well border border-border bg-surface p-6">
+            <div className="mt-8 rounded-well border border-accent bg-accent-soft p-6">
+              <h2 className="font-medium text-accent-deep">
+                {GIVE.passThrough.title}
+              </h2>
+              <p className="mt-2 text-pretty leading-relaxed text-ink">
+                {GIVE.passThrough.body}
+              </p>
+            </div>
+
+            <div className="mt-5 rounded-well border border-border bg-surface p-6">
               <h2 className="font-medium text-ink">{GIVE.report.title}</h2>
               <p className="mt-2 text-pretty leading-relaxed text-muted">
                 {GIVE.report.body}

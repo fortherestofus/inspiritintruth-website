@@ -4,6 +4,7 @@
  */
 import { Check } from "lucide-react";
 import { PRICING } from "@/lib/site";
+import { GIVE } from "@/lib/content";
 
 const FREE = [
   "The weekly devotional",
@@ -75,6 +76,18 @@ export default function Pricing() {
               ))}
             </ul>
           </div>
+        </div>
+
+        {/* The tithe belongs here, not only on the give card: this is where
+            someone decides to subscribe, and it is the reason subscribing is
+            itself a way of giving. */}
+        <div className="mt-8 rounded-well border border-accent bg-accent-soft p-6">
+          <h3 className="font-medium text-accent-deep">
+            {GIVE.subscriptionTithe.title}
+          </h3>
+          <p className="mt-2 max-w-reading text-pretty leading-relaxed text-ink">
+            {GIVE.subscriptionTithe.body}
+          </p>
         </div>
 
         <p className="mt-6 text-[0.9375rem] text-faint">
