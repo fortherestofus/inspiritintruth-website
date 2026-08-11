@@ -432,11 +432,17 @@ export default function Give() {
 
             <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 px-1">
               <Link
-                href="/giving-faq/"
+                href="/kindness/"
                 className="inline-flex items-center gap-2 text-[0.9375rem] font-medium text-ink transition-colors hover:text-accent-deep"
               >
-                Giving FAQs
+                The kindness ledger
                 <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/giving-faq/"
+                className="text-[0.9375rem] text-muted transition-colors hover:text-ink"
+              >
+                Giving FAQs
               </Link>
               <Link
                 href="/privacy/#sensitive"

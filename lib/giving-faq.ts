@@ -26,7 +26,8 @@ export const GIVING_FAQ_SECTIONS = [
   {
     heading: "How will I know where the kindness half went?",
     body: [
-      "We email you. Everyone who gives gets a note showing what the kindness half paid for and where it landed. We hold back a name when someone's dignity asks for it — we never hold back the numbers.",
+      "It is published. Every rand of the kindness half goes on our public kindness ledger at inspiritintruth.net/kindness/ — what it paid for, who received it, the date, and what is still being held and not yet given. Anyone can read it, not only people who gave.",
+      "Everyone who gives also gets an email when there is something new on the ledger. We hold back a name when someone's dignity asks for it — we never hold back the numbers.",
     ],
   },
   {

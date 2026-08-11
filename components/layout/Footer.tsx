@@ -57,6 +57,9 @@ export default function Footer() {
               <Link href="/terms/" className="text-ink-muted transition-colors hover:text-ink-text">
                 Terms of Service
               </Link>
+              <Link href="/kindness/" className="text-ink-muted transition-colors hover:text-ink-text">
+                Kindness ledger
+              </Link>
               <Link
                 href="/giving-faq/"
                 className="text-ink-muted transition-colors hover:text-ink-text"

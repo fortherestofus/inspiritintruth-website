@@ -157,6 +157,12 @@ export default async function ThanksPage({
             Back to InSpiritInTruth
           </Link>
           <Link
+            href="/kindness/"
+            className="text-[0.9375rem] text-muted transition-colors hover:text-ink"
+          >
+            The kindness ledger
+          </Link>
+          <Link
             href="/giving-faq/"
             className="text-[0.9375rem] text-muted transition-colors hover:text-ink"
           >
