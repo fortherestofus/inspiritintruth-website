@@ -185,6 +185,8 @@ export const GIVE = {
     "InSpiritInTruth is built with care — the devotionals, the Bible, the daily verses. If it's meant something to you, a gift funds the work behind it and helps it reach more hearts.",
   splitIntro:
     "Every gift does two things. Most of it funds the work — building new features, keeping the quality high, and creating the devotional content itself. And 10% goes to acts of kindness: donations to people and organisations doing good for others. We'll share where it lands.",
+  /** Sits under the quick amounts so the hero numeral reads as editable. */
+  customAmount: "Tap the amount to give any figure you like.",
   keeper: {
     title: "Become a Keeper",
     body:

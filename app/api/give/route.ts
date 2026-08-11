@@ -29,9 +29,9 @@ const INTERVAL: Record<string, string> = {
   yearly: "annually",
 };
 
-/** Guard rails on a public form. Amounts are ZAR. */
-const MIN_AMOUNT = 10;
-const MAX_AMOUNT = 100_000;
+/** Guard rails on a public form. Amounts are ZAR, and match the give card. */
+const MIN_AMOUNT = GIVING.minAmount;
+const MAX_AMOUNT = GIVING.maxAmount;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

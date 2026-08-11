@@ -29,11 +29,17 @@ export default function Give() {
   const [error, setError] = useState<string | null>(null);
 
   const value = typeof amount === "number" && amount > 0 ? amount : null;
-  const ready = Boolean(value) && email.includes("@");
+  // Any amount is welcome between the guard rails; the quick picks only
+  // prefill the field. /api/give checks the same bounds server-side.
+  const inRange =
+    value !== null && value >= GIVING.minAmount && value <= GIVING.maxAmount;
+  const ready = inRange && email.includes("@");
 
   const ctaLabel = !value
     ? "Enter a gift amount"
-    : `Support the work · ${GIVING.currency}${value}${recurring ? ` ${frequency}` : ""}`;
+    : !inRange
+      ? `Give ${GIVING.currency}${GIVING.minAmount}–${GIVING.maxAmount.toLocaleString()}`
+      : `Support the work · ${GIVING.currency}${value.toLocaleString()}${recurring ? ` ${frequency}` : ""}`;
 
   async function startGift() {
     if (!ready || busy) return;
@@ -126,24 +132,32 @@ export default function Give() {
                 Your gift
               </p>
 
-              {/* Amount */}
-              <div className="mt-5 flex items-start justify-center gap-1 py-4">
+              {/* Amount — free to type. The border is what tells a giver the
+                  big numeral is a field rather than a figure we chose for
+                  them; without it the quick picks read as the only options. */}
+              <label
+                htmlFor="give-amount"
+                className="mt-5 flex cursor-text items-start justify-center gap-1 rounded-well border border-border bg-bg py-4 transition-colors focus-within:border-accent"
+              >
                 <span className="mt-3 text-2xl font-medium text-muted">
                   {GIVING.currency}
                 </span>
                 <input
+                  id="give-amount"
                   inputMode="numeric"
                   pattern="[0-9]*"
+                  maxLength={6}
                   aria-label="Gift amount"
                   value={amount}
                   onChange={(e) => {
                     const raw = e.target.value.replace(/[^0-9]/g, "");
                     setAmount(raw === "" ? "" : Number(raw));
+                    if (error) setError(null);
                   }}
-                  className="nums w-full max-w-[6ch] bg-transparent text-center text-[3.5rem] font-medium leading-none tracking-[-0.03em] text-ink outline-none placeholder:text-faint"
+                  className="nums w-full max-w-[7ch] bg-transparent text-center text-[3.5rem] font-medium leading-none tracking-[-0.03em] text-ink outline-none placeholder:text-faint"
                   placeholder="0"
                 />
-              </div>
+              </label>
 
               {/* Quick amounts */}
               <div className="mt-2 grid grid-cols-4 gap-2">
@@ -166,6 +180,10 @@ export default function Give() {
                   );
                 })}
               </div>
+
+              <p className="mt-3 text-center text-[0.8125rem] leading-relaxed text-faint">
+                {GIVE.customAmount}
+              </p>
 
               {/* Keeper */}
               <div className="mt-6 rounded-well border border-border bg-bg p-5">

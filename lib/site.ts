@@ -52,12 +52,21 @@ export const GIVING: {
   currency: string;
   /** Quick-pick amounts, mirroring what the app used to offer. */
   quickAmounts: number[];
+  /**
+   * Guard rails on the amount. Any figure between them is allowed — the quick
+   * picks only prefill the field. `app/api/give` enforces the same numbers
+   * server-side, so a hand-crafted POST cannot slip past them.
+   */
+  minAmount: number;
+  maxAmount: number;
   /** Recurring cadences offered to a Keeper. */
   frequencies: { value: GivingFrequency; label: string }[];
 } = {
   enabled: true,
   currency: "R",
   quickAmounts: [50, 100, 250, 500],
+  minAmount: 10,
+  maxAmount: 100_000,
   frequencies: [
     { value: "weekly", label: "Weekly" },
     { value: "monthly", label: "Monthly" },
