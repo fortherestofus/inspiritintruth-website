@@ -246,9 +246,9 @@ export const GIVE = {
       "“Am I my brother's keeper?” someone once asked, hoping the answer was no. A Keeper gives a little each month to keep InSpiritInTruth going — for themselves, and for the next person who needs it. It's an ordinary way to answer yes. You choose the amount and how often, and you can change or cancel anytime.",
   },
   notAPurchase: {
-    title: "A gift, not a purchase",
+    title: "A gift, not a purchase — and we're not a charity",
     body:
-      "Giving is exactly that — a gift. It doesn't unlock anything, and it isn't required. You give because you want to keep something good going, not to get something back.",
+      "Giving is exactly that — a gift. It doesn't unlock anything, and it isn't required. InSpiritInTruth is an app built by a small studio, not a registered public-benefit organisation, so gifts aren't tax-deductible and we can't issue a tax certificate. We give half away because we want to, and we publish where it went so you don't have to take our word for it.",
   },
 } as const;
 

@@ -125,6 +125,27 @@ export const SUBSCRIPTION_TITHE = 10;
 export const GIVING_SPLIT_CODE = "SPL_fqZIN4OiLT";
 
 /**
+ * The subaccount the kindness half settles into. Used to total what has
+ * actually landed there, so the ledger's "Received" figure is read from
+ * Paystack rather than typed by hand and hoped over.
+ */
+export const KINDNESS_SUBACCOUNT = "ACCT_wcaazlr9c7cdoz0";
+
+/**
+ * Supabase, for the kindness ledger entries.
+ *
+ * The publishable key belongs in the source: it is designed to be public and
+ * ships in browser bundles everywhere else. Row-level security is what
+ * protects the data — only rows with published = true are readable, and
+ * nothing grants insert, update or delete. Putting it here rather than in an
+ * environment variable also means no extra step on the host.
+ */
+export const SUPABASE = {
+  url: "https://xjhkvphnxzuqookjqkjc.supabase.co",
+  publishableKey: "sb_publishable_K2vqPYqgoMqnrteZAPbVfw_MpedRwC0",
+} as const;
+
+/**
  * Pricing shown on the plans strip. Mirrors the App Store listing.
  *
  * LOCKED 2026-07-30 — $7.99/month, $59.99/year (37% off twelve months of

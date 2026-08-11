@@ -1,20 +1,21 @@
 /**
  * /kindness/ — the public ledger.
  *
- * Static: it is built from lib/kindness.ts, so publishing an entry means a
- * commit, and the git history becomes the audit trail. That is the point.
+ * Received is read from Paystack, Given from Supabase, and neither is typed by
+ * hand. Revalidates every five minutes: a ledger nobody has to remember to
+ * refresh is the only kind that stays true.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { GIVING, HELLO_EMAIL } from "@/lib/site";
 import {
-  KINDNESS_LEDGER,
+  fetchKindnessEntries,
+  fetchKindnessReceived,
   KINDNESS_PAGE,
-  KINDNESS_RECEIVED,
-  kindnessGiven,
-  kindnessHeld,
 } from "@/lib/kindness";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: { absolute: "InSpiritInTruth — The kindness ledger" },
@@ -23,8 +24,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/kindness/" },
 };
 
-/** R1 234 — spaces, not commas, because the amounts are rands. */
-function rands(value: number): string {
+/** A figure we could not read is shown as a dash, never as zero. */
+function rands(value: number | null): string {
+  if (value === null) return "—";
   return `${GIVING.currency}${value.toLocaleString("en-ZA")}`;
 }
 
@@ -35,7 +37,7 @@ function Figure({
 }: {
   label: string;
   value: string;
-  note?: string;
+  note: string;
 }) {
   return (
     <div className="rounded-well border border-border bg-surface p-6">
@@ -45,18 +47,20 @@ function Figure({
       <p className="nums mt-3 text-[2rem] font-medium leading-none tracking-[-0.03em] text-ink">
         {value}
       </p>
-      {note && (
-        <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">
-          {note}
-        </p>
-      )}
+      <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">{note}</p>
     </div>
   );
 }
 
-export default function KindnessPage() {
-  const given = kindnessGiven();
-  const held = kindnessHeld();
+export default async function KindnessPage() {
+  const [entries, received] = await Promise.all([
+    fetchKindnessEntries(),
+    fetchKindnessReceived(),
+  ]);
+
+  const given = entries ? entries.reduce((sum, e) => sum + e.amount, 0) : null;
+  // Only meaningful when both sides are known.
+  const held = received !== null && given !== null ? received - given : null;
 
   return (
     <div className="bg-bg">
@@ -81,28 +85,50 @@ export default function KindnessPage() {
           ))}
         </div>
 
+        <div className="mt-8 max-w-reading rounded-well border border-border bg-surface p-6">
+          <h2 className="font-medium text-ink">
+            {KINDNESS_PAGE.notACharity.title}
+          </h2>
+          <p className="mt-2 text-pretty leading-relaxed text-muted">
+            {KINDNESS_PAGE.notACharity.body}
+          </p>
+        </div>
+
         <div className="mt-12 grid gap-4 sm:grid-cols-3">
-          <Figure label="Received" value={rands(KINDNESS_RECEIVED)} />
-          <Figure label="Given" value={rands(given)} />
           <Figure
-            label="Held"
-            value={rands(held)}
-            note={KINDNESS_PAGE.heldNote}
+            label="Received"
+            value={rands(received)}
+            note={KINDNESS_PAGE.receivedNote}
+          />
+          <Figure
+            label="Given"
+            value={rands(given)}
+            note={KINDNESS_PAGE.givenNote}
+          />
+          <Figure
+            label={held !== null && held < 0 ? "Given ahead" : "Held"}
+            value={rands(held === null ? null : Math.abs(held))}
+            note={
+              held !== null && held < 0
+                ? KINDNESS_PAGE.aheadNote
+                : KINDNESS_PAGE.heldNote
+            }
           />
         </div>
 
         <div className="mt-16">
-          {KINDNESS_LEDGER.length === 0 ? (
+          {entries === null ? (
+            <p className="max-w-reading text-pretty leading-relaxed text-muted">
+              {KINDNESS_PAGE.unavailable}
+            </p>
+          ) : entries.length === 0 ? (
             <p className="max-w-reading text-pretty leading-relaxed text-muted">
               {KINDNESS_PAGE.empty}
             </p>
           ) : (
             <ul className="space-y-10">
-              {KINDNESS_LEDGER.map((entry) => (
-                <li
-                  key={`${entry.date}-${entry.title}`}
-                  className="border-t border-border pt-8"
-                >
+              {entries.map((entry) => (
+                <li key={entry.id} className="border-t border-border pt-8">
                   <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
                     <h2 className="text-pretty text-lg font-medium text-ink">
                       {entry.title}
@@ -112,8 +138,8 @@ export default function KindnessPage() {
                     </span>
                   </div>
                   <p className="mt-2 text-[0.9375rem] text-faint">
-                    <time dateTime={entry.date}>
-                      {new Date(entry.date).toLocaleDateString("en-ZA", {
+                    <time dateTime={entry.happenedOn}>
+                      {new Date(entry.happenedOn).toLocaleDateString("en-ZA", {
                         day: "numeric",
                         month: "long",
                         year: "numeric",
@@ -122,13 +148,15 @@ export default function KindnessPage() {
                     {" · "}
                     {entry.recipient}
                   </p>
-                  <p className="mt-4 max-w-reading text-pretty leading-relaxed text-muted">
-                    {entry.note}
-                  </p>
-                  {entry.photo && (
+                  {entry.note && (
+                    <p className="mt-4 max-w-reading text-pretty leading-relaxed text-muted">
+                      {entry.note}
+                    </p>
+                  )}
+                  {entry.photoUrl && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={entry.photo}
+                      src={entry.photoUrl}
                       alt=""
                       className="mt-5 w-full max-w-reading rounded-well border border-border"
                     />
