@@ -132,12 +132,17 @@ export default function Give() {
                 Your gift
               </p>
 
-              {/* Amount — free to type. The border is what tells a giver the
-                  big numeral is a field rather than a figure we chose for
-                  them; without it the quick picks read as the only options. */}
+              {/* Amount — free to type. The instruction sits above the field
+                  where a label belongs, and the border makes the big numeral
+                  read as a field rather than a figure we chose for them.
+                  Without both, the quick picks look like the only options. */}
+              <p id="give-amount-hint" className="mt-2 leading-relaxed text-muted">
+                {GIVE.amountLabel}
+              </p>
+
               <label
                 htmlFor="give-amount"
-                className="mt-5 flex cursor-text items-start justify-center gap-1 rounded-well border border-border bg-bg py-4 transition-colors focus-within:border-accent"
+                className="mt-4 flex cursor-text items-start justify-center gap-1 rounded-well border border-border bg-bg py-4 transition-colors focus-within:border-accent"
               >
                 <span className="mt-3 text-2xl font-medium text-muted">
                   {GIVING.currency}
@@ -148,6 +153,7 @@ export default function Give() {
                   pattern="[0-9]*"
                   maxLength={6}
                   aria-label="Gift amount"
+                  aria-describedby="give-amount-hint give-amount-range"
                   value={amount}
                   onChange={(e) => {
                     const raw = e.target.value.replace(/[^0-9]/g, "");
@@ -181,8 +187,15 @@ export default function Give() {
                 })}
               </div>
 
-              <p className="mt-3 text-center text-[0.8125rem] leading-relaxed text-faint">
-                {GIVE.customAmount}
+              {/* The range is stated up front rather than only on rejection —
+                  a giver should not have to trip the guard rail to find it. */}
+              <p
+                id="give-amount-range"
+                className="mt-3 text-center text-[0.8125rem] leading-relaxed text-faint"
+              >
+                Any amount from {GIVING.currency}
+                {GIVING.minAmount} to {GIVING.currency}
+                {GIVING.maxAmount.toLocaleString()}.
               </p>
 
               {/* Keeper */}
