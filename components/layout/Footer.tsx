@@ -16,9 +16,9 @@ export default function Footer() {
           <div className="max-w-sm">
             {/* Always the cream mark — this surface is dark in both themes. */}
             <Image
-              src="/icons/logo-cream.png"
+              src="/icons/logo-lockup-cream.png"
               alt="InSpiritInTruth"
-              width={242}
+              width={420}
               height={100}
               className="h-8 w-auto"
             />

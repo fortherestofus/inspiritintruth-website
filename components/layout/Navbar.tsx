@@ -48,18 +48,18 @@ export default function Navbar() {
             theme in JS — no hydration mismatch, no flash of the wrong mark. */}
         <a href="#top" className="flex items-center" aria-label="InSpiritInTruth — home">
           <Image
-            src="/icons/logo-ink.png"
+            src="/icons/logo-lockup-ink.png"
             alt="InSpiritInTruth"
-            width={242}
+            width={420}
             height={100}
             priority
             className="h-7 w-auto dark:hidden"
           />
           <Image
-            src="/icons/logo-cream.png"
+            src="/icons/logo-lockup-cream.png"
             alt=""
             aria-hidden
-            width={242}
+            width={420}
             height={100}
             priority
             className="hidden h-7 w-auto dark:block"
