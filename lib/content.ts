@@ -195,20 +195,13 @@ export const GIVE = {
     title: "Where your gift goes",
     work: {
       label: "The work",
-      items: [
-        "Development — the hours of building, fixing and maintaining the app",
-        "Running costs — hosting, the Bible text licences, and the AI behind tailored devotionals",
-        "The devotionals themselves — writing every one, and checking every one",
-        "Making it better — new features, faster, and higher quality over time",
-      ],
+      body:
+        "Building and maintaining the app, the running costs behind it — hosting, Bible text licences, the AI — and writing every devotional.",
     },
     kindness: {
       label: "Acts of kindness",
-      items: [
-        "Charities and churches doing good in their communities",
-        "People we are pointed to — help with living expenses, school fees, a bill that came at the wrong time",
-        "Whatever else lands in front of us that we can actually do something about",
-      ],
+      body:
+        "Charities and churches, and people we are pointed to who need help with living expenses, school fees, or a bill that came at the wrong time.",
     },
   },
   /**

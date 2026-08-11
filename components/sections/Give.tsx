@@ -107,9 +107,12 @@ export default function Give() {
 
             {/* The split, as a bar */}
             <div className="mt-4 flex h-4 overflow-hidden rounded-full">
+              {/* One bar divided, not two bars side by side — so no gap and
+                  no rounding at the meeting point. The parent clips the outer
+                  ends; the join stays square. */}
               <div className="bg-accent" style={{ flex: GIVING_SPLIT.work }} />
               <div
-                className="ml-1 rounded-full bg-kindness"
+                className="bg-kindness"
                 style={{ flex: GIVING_SPLIT.kindness }}
               />
             </div>
@@ -138,16 +141,9 @@ export default function Give() {
                       {band.share}%
                     </span>
                   </div>
-                  <ul className="ml-[1.4rem] mt-3 space-y-2">
-                    {band.items.map((item) => (
-                      <li
-                        key={item}
-                        className="text-pretty leading-relaxed text-muted before:mr-3 before:text-faint before:content-['—']"
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="ml-[1.4rem] mt-2 text-pretty leading-relaxed text-muted">
+                    {band.body}
+                  </p>
                 </div>
               ))}
             </div>

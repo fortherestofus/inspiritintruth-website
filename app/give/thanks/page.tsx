@@ -95,16 +95,9 @@ export default async function ThanksPage({
                     <span className="nums text-accent-deep">{band.share}%</span>
                     {band.label}
                   </h2>
-                  <ul className="mt-3 space-y-2">
-                    {band.items.map((item) => (
-                      <li
-                        key={item}
-                        className="text-pretty leading-relaxed text-muted before:mr-3 before:text-faint before:content-['—']"
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="mt-2 text-pretty leading-relaxed text-muted">
+                    {band.body}
+                  </p>
                 </div>
               ))}
             </div>
