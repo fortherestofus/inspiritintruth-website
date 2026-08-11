@@ -184,7 +184,7 @@ export const GIVE = {
   body:
     "InSpiritInTruth is built with care — the devotionals, the Bible, the daily verses. If it's meant something to you, a gift funds the work behind it and helps it reach more hearts.",
   splitIntro:
-    "Every gift splits in half. Half keeps the work going. Half goes to someone who needs it — and every cent of that half reaches them, because the cost of getting it there comes out of our half, not theirs.",
+    "Every gift splits in half. Half keeps the work going. Half goes to someone who needs it. The halves are worked out on what actually lands after the card fee, and from there nothing else is taken from their side.",
   /**
    * "Most of it funds the work" was true and told a giver nothing — it reads
    * as overhead, which is exactly what a charity-literate reader hears. Naming
@@ -210,9 +210,9 @@ export const GIVE = {
    * apart. Admin, fees and anyone's time come out of the work half.
    */
   passThrough: {
-    title: "Every cent of that half arrives",
+    title: "Nothing more comes out of that half",
     body:
-      "Transfer fees, the driving, the phone calls, anyone's time — all of it comes out of the half that funds the work. Nothing is deducted from the half that goes to a person or a cause. It is the only promise here that we can be held to cent for cent, so it is the one we make.",
+      "Paystack takes a card fee before a gift ever reaches us — that is the one deduction we cannot prevent, and both halves carry it equally. Everything after it comes out of our side: the transfers, the driving, the phone calls, anyone's time. Paystack pays the kindness half straight into its own account, so it never passes through ours to be borrowed from.",
   },
   /**
    * A promise with a delivery mechanism, not a vague "we'll share". If this

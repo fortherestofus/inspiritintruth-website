@@ -61,7 +61,7 @@ export const KINDNESS_PAGE = {
   title: "The kindness ledger",
   intro: [
     "Half of every gift to InSpiritInTruth goes to acts of kindness, and a tenth of what reaches us from Premium subscriptions joins it. This page is where that money is accounted for — not a summary of it, the whole of it.",
-    "Every cent of the kindness half reaches a person or a cause. Transfer fees, travel and anyone's time come out of the half that funds the work, never out of this one. Where a name is withheld it is because being named would cost someone their dignity; the amount is never withheld.",
+    "The halves are worked out on what lands after the card fee, which both sides carry equally. Every cost after that — transfers, travel, admin, anyone's time — comes out of the half that funds the work, never out of this one. Where a name is withheld it is because being named would cost someone their dignity; the amount is never withheld.",
   ],
   /** Shown when the ledger is empty — which is a real state, not an error. */
   empty:

@@ -105,6 +105,26 @@ export const GIVING_SPLIT = {
 export const SUBSCRIPTION_TITHE = 10;
 
 /**
+ * Paystack transaction split — sends the kindness half straight to its own
+ * bank account, so it never lands in the main balance at all.
+ *
+ * The separation is the point: a promise to set half aside is only as good as
+ * the discipline behind it, and this one is enforced by the processor instead.
+ *
+ * bearer_type is "all", so Paystack's card fee is carried equally by both
+ * halves — i.e. each side gets half of what actually lands. The giving copy
+ * says exactly that; if this split is ever reconfigured, that copy has to move
+ * with it.
+ *
+ * CAVEAT: this rides on transaction/initialize, which covers one-off gifts. It
+ * is NOT established that Paystack carries a split into the renewals it bills
+ * itself for a subscription — the docs describe split_code on Charge
+ * Authorization, which is not the path a plan renewal takes. Until that is
+ * confirmed, renewals need checking each month and topping up by hand.
+ */
+export const GIVING_SPLIT_CODE = "SPL_fqZIN4OiLT";
+
+/**
  * Pricing shown on the plans strip. Mirrors the App Store listing.
  *
  * LOCKED 2026-07-30 — $7.99/month, $59.99/year (37% off twelve months of

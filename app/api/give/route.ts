@@ -15,7 +15,7 @@
  * self-service cancel link.
  */
 import { NextResponse } from "next/server";
-import { GIVING, SITE_URL } from "@/lib/site";
+import { GIVING, GIVING_SPLIT_CODE, SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -140,6 +140,9 @@ export async function POST(request: Request) {
     amount: amountMinor,
     currency: CURRENCY,
     callback_url: `${SITE_URL}/give/thanks/`,
+    // Sends the kindness half straight to its own bank account. See
+    // GIVING_SPLIT_CODE for why this is enforced here rather than promised.
+    split_code: GIVING_SPLIT_CODE,
     metadata: {
       source: "website",
       recurring,

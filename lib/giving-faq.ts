@@ -20,7 +20,8 @@ export const GIVING_FAQ_SECTIONS = [
       "Two places, and we would rather be specific than reassuring.",
       "Half funds the work: the hours of building, fixing and maintaining the app; the running costs — hosting, the Bible text licences, and the AI behind tailored devotionals; writing and checking every devotional; and making the app better over time.",
       "Half goes to acts of kindness: charities and churches doing good in their communities, and people we are pointed to who need help with living expenses, school fees, or a bill that came at the wrong time.",
-      "Every cent of the kindness half reaches a person or a cause. Transfer fees, travel and anyone's time come out of the work half — it is deducted from our side, never from theirs.",
+      "The two halves are worked out on what lands after Paystack's card fee, which is currently 2.9% and is deducted before the money reaches us. Both halves carry it equally; it is the one cost we cannot route around.",
+      "Every cost after that comes out of the work half — transfers, travel, admin and anyone's time. And the kindness half is paid by Paystack straight into its own bank account, so it never sits in our balance waiting to be borrowed against.",
     ],
   },
   {
