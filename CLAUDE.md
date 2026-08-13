@@ -6,7 +6,8 @@
 
 ## Always commit and push
 - Commit and `git push origin main` as work completes, without being asked. Never leave a dirty tree.
-- Do the same in the FTROU repo. Pushing there does NOT deploy it (LiteSpeed host, no CI) — say so.
+- Do the same in the FTROU repo.
+- **Both sites auto-deploy from a push to `main`** (corrected 2026-08-14; this line used to claim the FTROU repo did not deploy on push). Verified against production minutes after pushing the 18+ legal change: `inspiritintruth.net/privacy/` and `fortherestofus.app/apps/inspiritintruth/privacy/` both served the new copy. Don't tell Alroy to go and deploy something that is already live — curl the live URL for a string you just wrote and check.
 
 ## Brand rule — honest over polished
 - App screenshots stay authentic: real timestamps, real battery, raw demo text.
