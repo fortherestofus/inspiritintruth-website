@@ -16,7 +16,7 @@
  */
 import { HELLO_EMAIL, LEGAL_EMAIL, SITE_URL } from "@/lib/site";
 
-export const LEGAL_LAST_UPDATED = "3 August 2026";
+export const LEGAL_LAST_UPDATED = "14 August 2026";
 
 const STUDIO = "For The Rest Of Us";
 
@@ -142,10 +142,12 @@ export const PRIVACY_SECTIONS = [
   },
   {
     id: "children",
-    heading: "Children",
+    heading: "Children and young people",
     body: [
-      "InSpiritInTruth is intended for people aged 13 and over, and if you are under 18 we ask that a parent or guardian agrees to this policy with you. South African law requires a competent person's consent for the personal information of anyone under 18.",
-      `We do not knowingly collect information from children under 13. If you believe a child under 13 has given us information, contact ${LEGAL_EMAIL} and we will delete it promptly.`,
+      "You need to be 18 or over to create an InSpiritInTruth account.",
+      "It is worth saying why we set it there, because a devotional app is not an obvious place to find an age limit. South African law requires a competent person's consent before anyone may process the personal information of a person under 18, and the most personal thing this app does is invite you to write about what you are actually going through so a devotional can be shaped around it. Accepting that from a child on the strength of a tick-box claiming a parent agreed would not be real consent. We would rather not collect it at all than pretend otherwise.",
+      `We do not knowingly collect information from anyone under 18. If you believe someone under 18 has given us information, contact ${LEGAL_EMAIL} and we will delete it promptly.`,
+      "None of this stops a young person reading scripture. A verse or a devotional that someone shares with them by link opens without an account, and we ask nothing of them to read it.",
     ],
   },
   {
@@ -202,7 +204,7 @@ export const TERMS_SECTIONS = [
       "You need an account for anything that syncs. You agree to give accurate information, to keep your sign-in details to yourself, and to tell us promptly at " +
         HELLO_EMAIL +
         " if you think someone else has got into your account. What happens under your account is your responsibility.",
-      "You must be at least 13 to use InSpiritInTruth. If you are under 18, you need a parent or guardian to agree to these terms with you.",
+      "You must be 18 or over to create an InSpiritInTruth account. If we find out that an account belongs to someone under 18, we will close it and delete what is on it.",
     ],
   },
   {
