@@ -7,7 +7,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sprout } from "lucide-react";
 import { GIVING, HELLO_EMAIL } from "@/lib/site";
 import {
   fetchKindnessEntries,
@@ -30,24 +30,37 @@ function rands(value: number | null): string {
   return `${GIVING.currency}${value.toLocaleString("en-ZA")}`;
 }
 
+/**
+ * One figure in the summary. Deliberately not a card — the three of them live
+ * inside a single well, divided by rules, so the summary reads as one
+ * instrument rather than three boxes all saying R0.
+ */
 function Figure({
   label,
   value,
   note,
+  lead = false,
 }: {
   label: string;
   value: string;
   note: string;
+  /** The figure the page is actually about, sized to say so. */
+  lead?: boolean;
 }) {
   return (
-    <div className="rounded-well border border-border bg-surface p-6">
-      <p className="text-[0.8125rem] uppercase tracking-[0.14em] text-faint">
+    <div className="px-6 py-5 sm:px-7 sm:py-6">
+      <p className="flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.14em] text-faint">
+        {lead && <span className="h-2 w-2 rounded-full bg-kindness" />}
         {label}
       </p>
-      <p className="nums mt-3 text-[2rem] font-medium leading-none tracking-[-0.03em] text-ink">
+      <p
+        className={`nums mt-2.5 font-medium leading-none tracking-[-0.03em] text-ink ${
+          lead ? "text-[2.5rem] sm:text-[3rem]" : "text-[1.75rem]"
+        }`}
+      >
         {value}
       </p>
-      <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">{note}</p>
+      <p className="mt-2 text-[0.875rem] leading-snug text-faint">{note}</p>
     </div>
   );
 }
@@ -58,14 +71,17 @@ export default async function KindnessPage() {
     fetchKindnessReceived(),
   ]);
 
-  // Only what Paystack has actually paid counts as received; a scheduled
-  // payout is money in transit, and is called out separately below.
+  // Only what Paystack has actually paid counts as received. Money in transit
+  // is not shown at all — the page reports what has landed, and nothing about
+  // what is on its way.
   const received = money?.settled ?? null;
-  const pending = money?.pending ?? 0;
 
   const given = entries ? entries.reduce((sum, e) => sum + e.amount, 0) : null;
   // Only meaningful when both sides are known.
   const held = received !== null && given !== null ? received - given : null;
+  // The bar divides what has landed. It is meaningless before anything has,
+  // and misleading when we have given ahead of settlement.
+  const showBar = received !== null && received > 0 && held !== null && held >= 0;
 
   return (
     <div className="bg-bg">
@@ -90,46 +106,55 @@ export default async function KindnessPage() {
           ))}
         </div>
 
-        <p className="mt-4 max-w-reading text-pretty leading-relaxed text-muted">
-          {KINDNESS_PAGE.newsletter}
-        </p>
-
-        <div className="mt-8 max-w-reading rounded-well border border-border bg-surface p-6">
-          <h2 className="font-medium text-ink">
-            {KINDNESS_PAGE.notACharity.title}
-          </h2>
-          <p className="mt-2 text-pretty leading-relaxed text-muted">
-            {KINDNESS_PAGE.notACharity.body}
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+        {/* One well, ruled into parts — not three cards. Given leads because it
+            is the figure the page exists to report; Received and Held are the
+            arithmetic behind it. */}
+        <div className="mt-12 overflow-hidden rounded-well border border-border bg-surface shadow-card">
           <Figure
-            label="Received"
-            value={rands(received)}
-            note={KINDNESS_PAGE.receivedNote}
-          />
-          <Figure
+            lead
             label="Given"
             value={rands(given)}
-            note={KINDNESS_PAGE.givenNote}
+            note={KINDNESS_PAGE.givenNote(entries?.length ?? 0)}
           />
-          <Figure
-            label={held !== null && held < 0 ? "Given ahead" : "Held"}
-            value={rands(held === null ? null : Math.abs(held))}
-            note={
-              held !== null && held < 0
-                ? KINDNESS_PAGE.aheadNote
-                : KINDNESS_PAGE.heldNote
-            }
-          />
-        </div>
 
-        {pending > 0 && (
-          <p className="mt-4 max-w-reading text-pretty leading-relaxed text-muted">
-            {KINDNESS_PAGE.pendingNote(rands(pending))}
-          </p>
-        )}
+          {showBar && (
+            <div className="px-6 pb-6 sm:px-7 sm:pb-7">
+              {/* One bar divided, not two side by side — same shape as the
+                  gift split on the giving section. */}
+              <div className="flex h-2.5 overflow-hidden rounded-full bg-sunken">
+                <div className="bg-kindness" style={{ flex: given ?? 0 }} />
+                <div style={{ flex: held ?? 0 }} />
+              </div>
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-[0.8125rem] text-faint">
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-kindness" />
+                  {KINDNESS_PAGE.legend.given}
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full border border-border bg-sunken" />
+                  {KINDNESS_PAGE.legend.held}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <div className="grid divide-y divide-border border-t border-border sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+            <Figure
+              label="Received"
+              value={rands(received)}
+              note={KINDNESS_PAGE.receivedNote}
+            />
+            <Figure
+              label={held !== null && held < 0 ? "Given ahead" : "Held"}
+              value={rands(held === null ? null : Math.abs(held))}
+              note={
+                held !== null && held < 0
+                  ? KINDNESS_PAGE.aheadNote
+                  : KINDNESS_PAGE.heldNote
+              }
+            />
+          </div>
+        </div>
 
         <div className="mt-16">
           {entries === null ? (
@@ -137,52 +162,80 @@ export default async function KindnessPage() {
               {KINDNESS_PAGE.unavailable}
             </p>
           ) : entries.length === 0 ? (
-            <p className="max-w-reading text-pretty leading-relaxed text-muted">
-              {KINDNESS_PAGE.empty}
-            </p>
+            <div className="rounded-well border border-border bg-sunken px-6 py-12 text-center">
+              <Sprout className="mx-auto h-6 w-6 text-faint" aria-hidden />
+              <p className="mx-auto mt-4 max-w-reading text-pretty leading-relaxed text-muted">
+                {KINDNESS_PAGE.empty}
+              </p>
+            </div>
           ) : (
-            <ul className="space-y-10">
-              {entries.map((entry) => (
-                <li key={entry.id} className="border-t border-border pt-8">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-                    <h2 className="text-pretty text-lg font-medium text-ink">
-                      {entry.title}
-                    </h2>
-                    <span className="nums font-medium text-accent-deep">
-                      {rands(entry.amount)}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-[0.9375rem] text-faint">
-                    <time dateTime={entry.happenedOn}>
+            <>
+              {/* Statement rows: date rail, what it did, amount right-aligned
+                  in tabular figures. The shape a ledger is expected to have. */}
+              <ul>
+                {entries.map((entry) => (
+                  <li
+                    key={entry.id}
+                    className="grid grid-cols-[1fr_auto] gap-x-6 border-t border-border py-7 sm:grid-cols-[8rem_1fr_auto]"
+                  >
+                    <time
+                      dateTime={entry.happenedOn}
+                      className="nums text-[0.875rem] text-faint sm:pt-1"
+                    >
                       {new Date(entry.happenedOn).toLocaleDateString("en-ZA", {
                         day: "numeric",
-                        month: "long",
+                        month: "short",
                         year: "numeric",
                       })}
                     </time>
-                    {" · "}
-                    {entry.recipient}
-                  </p>
-                  {entry.note && (
-                    <p className="mt-4 max-w-reading text-pretty leading-relaxed text-muted">
-                      {entry.note}
-                    </p>
-                  )}
-                  {entry.photoUrl && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={entry.photoUrl}
-                      alt=""
-                      className="mt-5 w-full max-w-reading rounded-well border border-border"
-                    />
-                  )}
-                </li>
-              ))}
-            </ul>
+
+                    {/* Amount sits beside the date on mobile and in its own
+                        column on desktop, so it is never orphaned below the
+                        note on a narrow screen. */}
+                    <span className="nums text-right font-medium text-ink sm:order-last">
+                      {rands(entry.amount)}
+                    </span>
+
+                    <div className="col-span-2 mt-2 sm:col-span-1 sm:mt-0">
+                      <h2 className="text-pretty font-medium text-ink">
+                        {entry.title}
+                      </h2>
+                      <p className="mt-1 text-[0.9375rem] text-muted">
+                        {entry.recipient}
+                      </p>
+                      {entry.note && (
+                        <p className="mt-3 max-w-reading text-pretty leading-relaxed text-muted">
+                          {entry.note}
+                        </p>
+                      )}
+                      {entry.photoUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={entry.photoUrl}
+                          alt=""
+                          className="mt-4 w-full max-w-sm rounded-card border border-border"
+                        />
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-8 max-w-reading border-t border-border pt-6 text-[0.9375rem] leading-relaxed text-faint">
+                {KINDNESS_PAGE.withheldNote}
+              </p>
+            </>
           )}
         </div>
 
-        <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border pt-8">
+        {/* Footnotes. The correction still has to be here — giving half away
+            invites the assumption that this is a charity — but it belongs at
+            the foot of the page, not the head of it. */}
+        <div className="mt-16 max-w-reading space-y-3 border-t border-border pt-8 text-[0.9375rem] leading-relaxed text-faint">
+          <p className="text-pretty">{KINDNESS_PAGE.notACharity}</p>
+          <p className="text-pretty">{KINDNESS_PAGE.newsletter}</p>
+        </div>
+
+        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Link
             href="/#give"
             className="inline-flex items-center gap-2 text-[0.9375rem] font-medium text-ink transition-colors hover:text-accent-deep"

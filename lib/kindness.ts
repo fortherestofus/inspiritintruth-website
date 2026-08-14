@@ -96,11 +96,15 @@ export async function fetchKindnessEntries(): Promise<KindnessEntry[] | null> {
  * and matching on subaccount_code cannot fail that way, and does not require
  * keeping a second identifier in sync.
  *
- * `pending` is reported separately instead of being folded into the total: a
+ * `pending` is kept apart from the total instead of folded into it: a
  * settlement Paystack has scheduled but not paid is not money in the account,
- * and calling it "received" would overstate the fund. It matters more than it
- * sounds — an unverified subaccount holds payouts indefinitely, so pending can
- * sit there for a long time and needs to be visible rather than invisible.
+ * and calling it "received" would overstate the fund.
+ *
+ * It is deliberately not published — the page shows money once it has landed
+ * and says nothing about money in transit. It is still returned because an
+ * unverified subaccount holds payouts indefinitely, and when that happens
+ * `settled` reads 0 forever with nothing on the page to say why. Keeping the
+ * figure means that state is still legible from the admin side.
  *
  * Returns null on failure — never 0, which would understate the fund.
  */
@@ -158,42 +162,53 @@ export async function fetchKindnessReceived(): Promise<{
   }
 }
 
+/**
+ * Page copy.
+ *
+ * TRIMMED 2026-08-14. This page used to explain its own honesty in four
+ * separate places — why an empty ledger was the right thing to show, why
+ * pending money was not counted, why the claim could be checked rather than
+ * taken on trust. Every one of those sentences was true and none of them
+ * earned its place: a ledger that argues for its own integrity reads as
+ * anxious, and the numbers were doing the work anyway. Nothing disclosed was
+ * removed — only the narration around it. Keep it that way.
+ */
 export const KINDNESS_PAGE = {
   title: "The kindness ledger",
   intro: [
-    "Half of every gift to InSpiritInTruth goes to acts of kindness, and a tenth of what reaches us from Premium subscriptions joins it. This page is where that money is accounted for — not a summary of it, the whole of it.",
-    "The halves are worked out on what lands after the card fee, which both sides carry equally. Every cost after that — transfers, travel, admin, anyone's time — comes out of the half that funds the work, never out of this one. Where a name is withheld it is because being named would cost someone their dignity; the amount is never withheld.",
+    "Half of every gift to InSpiritInTruth goes to acts of kindness, and a tenth of what reaches us from Premium subscriptions joins it. Every rand of it is accounted for here.",
+    "The halves are worked out on what lands after the card fee, which both sides carry equally. Every cost after that — transfers, travel, admin, anyone's time — comes out of the half that funds the work, never out of this one.",
   ],
   /**
-   * Said plainly and early. Giving half away invites the assumption that this
-   * is a charity, and it is not — it is a small studio that decided to give
-   * back. Letting that assumption stand would be the dishonest thing.
+   * Sits with the entries rather than the intro: it explains a word the reader
+   * meets in the list, and means nothing before then.
    */
-  notACharity: {
-    title: "This is an app, not a charity",
-    body:
-      "InSpiritInTruth is a devotional app built by a small studio. We are not a registered public-benefit organisation, gifts are not tax-deductible, and we cannot issue a tax certificate. We give half of what comes in because we want to, not because anyone requires it of us — and this page exists so that the claim can be checked rather than taken on trust.",
-  },
-  /** Shown when the ledger is empty — which is a real state, not an error. */
-  empty:
-    "Nothing has gone out yet. The fund is collecting, and the first entry will appear here the day it does. An empty ledger is the honest thing to show until then.",
+  withheldNote:
+    "Where a name is withheld, being named would have cost someone their dignity. The amount is never withheld.",
+  /** Shown when the ledger is empty — a real state, not an error. */
+  empty: "Nothing has gone out yet. The first entry will appear here the day it does.",
   /** Shown when Supabase or Paystack could not be reached. */
   unavailable:
     "We could not load this just now. It is a problem on our side, not a sign that the fund is empty — please try again shortly.",
-  heldNote:
-    "Received and not yet given. It sits in its own account until there is something worth doing with it.",
-  newsletter:
-    "This page is the record, and it is always current — nothing here waits on a newsletter going out. Givers also get a newsletter when there is news worth sending.",
+  receivedNote: "Settled into the kindness account.",
+  heldNote: "Received, not yet given.",
   /**
    * Held goes negative whenever we give ahead of what has settled, which is a
-   * normal thing to do and not an error. Saying so beats showing a minus sign
+   * normal thing to do and not an error. Naming it beats showing a minus sign
    * and letting it read as a bug.
    */
-  aheadNote:
-    "We have given out more than has settled so far — the difference came from our side and will be squared up as gifts land.",
-  receivedNote: "Settled into the kindness account, read from Paystack.",
-  /** Only rendered when Paystack has a payout scheduled but not yet paid. */
-  pendingNote: (amount: string) =>
-    `${amount} more has been collected and is on its way to the kindness account. It is not counted above until it lands.`,
-  givenNote: "Totalled from the entries below.",
+  aheadNote: "Given ahead of what has settled.",
+  givenNote: (count: number) =>
+    count === 0 ? "Nothing yet." : `Across ${count} ${count === 1 ? "entry" : "entries"}.`,
+  /** Bar legend, when there is something to divide. */
+  legend: { given: "Given", held: "Held" },
+  /**
+   * Demoted to a footnote. Giving half away invites the assumption that this is
+   * a charity and it is not, so the correction stays — but the Giving FAQs
+   * answer tax-deductibility in full, and repeating it in a card at the top of
+   * the page gave it more weight than it needs.
+   */
+  notACharity:
+    "InSpiritInTruth is an app built by a small studio, not a registered public-benefit organisation. Gifts are not tax-deductible and we cannot issue a tax certificate.",
+  newsletter: "Givers also get a newsletter when there is news worth sending.",
 } as const;
