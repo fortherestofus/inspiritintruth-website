@@ -53,10 +53,15 @@ function Figure({
 }
 
 export default async function KindnessPage() {
-  const [entries, received] = await Promise.all([
+  const [entries, money] = await Promise.all([
     fetchKindnessEntries(),
     fetchKindnessReceived(),
   ]);
+
+  // Only what Paystack has actually paid counts as received; a scheduled
+  // payout is money in transit, and is called out separately below.
+  const received = money?.settled ?? null;
+  const pending = money?.pending ?? 0;
 
   const given = entries ? entries.reduce((sum, e) => sum + e.amount, 0) : null;
   // Only meaningful when both sides are known.
@@ -119,6 +124,12 @@ export default async function KindnessPage() {
             }
           />
         </div>
+
+        {pending > 0 && (
+          <p className="mt-4 max-w-reading text-pretty leading-relaxed text-muted">
+            {KINDNESS_PAGE.pendingNote(rands(pending))}
+          </p>
+        )}
 
         <div className="mt-16">
           {entries === null ? (

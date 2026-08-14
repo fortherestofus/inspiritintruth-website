@@ -7,7 +7,8 @@
  *  subaccount, so the money that has landed there is a fact we can read rather
  *  than a number someone has to remember to update. A hand-typed figure drifts
  *  the first month it is forgotten, and a ledger that drifts is worse than no
- *  ledger.
+ *  ledger. Only settlements Paystack has actually paid count; anything still
+ *  scheduled is shown separately as on its way.
  *
  *  GIVEN comes from Supabase. No API knows that R850 became a month of
  *  groceries — only a person does. Entries are written on the Kindness ledger
@@ -86,45 +87,72 @@ export async function fetchKindnessEntries(): Promise<KindnessEntry[] | null> {
 }
 
 /**
- * Total settled into the kindness subaccount, in rands.
+ * What the kindness subaccount has been paid, split by whether it has landed.
  *
- * Settlements rather than transactions on purpose: a transaction can succeed
- * and still be in flight, and "received" should mean the money is actually
- * there. Paginates because Paystack caps a page at 100 and this figure only
- * ever grows.
+ * Filtering is done here rather than by Paystack. `?subaccount=` on the
+ * settlement endpoint only matches the NUMERIC subaccount id — passing the
+ * ACCT_ code returns an empty list with a 200, which is how this silently
+ * reported R0 while money was sitting in the account. Reading every settlement
+ * and matching on subaccount_code cannot fail that way, and does not require
+ * keeping a second identifier in sync.
+ *
+ * `pending` is reported separately instead of being folded into the total: a
+ * settlement Paystack has scheduled but not paid is not money in the account,
+ * and calling it "received" would overstate the fund. It matters more than it
+ * sounds — an unverified subaccount holds payouts indefinitely, so pending can
+ * sit there for a long time and needs to be visible rather than invisible.
  *
  * Returns null on failure — never 0, which would understate the fund.
  */
-export async function fetchKindnessReceived(): Promise<number | null> {
+export async function fetchKindnessReceived(): Promise<{
+  settled: number;
+  pending: number;
+} | null> {
   const secret = process.env.PAYSTACK_SECRET_KEY;
   if (!secret) return null;
 
+  type Settlement = {
+    status?: string;
+    total_amount?: number;
+    subaccount?: { subaccount_code?: string } | null;
+  };
+
   try {
-    let minor = 0;
+    let settledMinor = 0;
+    let pendingMinor = 0;
+
     for (let page = 1; page <= 20; page += 1) {
       const query = new URLSearchParams({
-        subaccount: KINDNESS_SUBACCOUNT,
         perPage: "100",
         page: String(page),
       });
-      const resp = await fetch(
-        `https://api.paystack.co/settlement?${query}`,
-        {
-          headers: { Authorization: `Bearer ${secret}` },
-          next: { revalidate: 300 },
-        },
-      );
+      const resp = await fetch(`https://api.paystack.co/settlement?${query}`, {
+        headers: { Authorization: `Bearer ${secret}` },
+        next: { revalidate: 300 },
+      });
       if (!resp.ok) return null;
       const body = await resp.json();
       if (!body?.status) return null;
 
-      const rows: { total_amount?: number }[] = body.data ?? [];
-      minor += rows.reduce((sum, row) => sum + (Number(row.total_amount) || 0), 0);
+      const rows: Settlement[] = body.data ?? [];
+      for (const row of rows) {
+        if (row.subaccount?.subaccount_code !== KINDNESS_SUBACCOUNT) continue;
+        const amount = Number(row.total_amount) || 0;
+        // Anything Paystack has not marked a success is still in flight —
+        // treat reversed or failed as neither, so they never inflate a figure.
+        if (row.status === "success") settledMinor += amount;
+        else if (row.status === "pending" || row.status === "processing") {
+          pendingMinor += amount;
+        }
+      }
 
-      // Last page reached.
       if (rows.length < 100) break;
     }
-    return Math.round(minor / 100);
+
+    return {
+      settled: Math.round(settledMinor / 100),
+      pending: Math.round(pendingMinor / 100),
+    };
   } catch {
     return null;
   }
@@ -164,5 +192,8 @@ export const KINDNESS_PAGE = {
   aheadNote:
     "We have given out more than has settled so far — the difference came from our side and will be squared up as gifts land.",
   receivedNote: "Settled into the kindness account, read from Paystack.",
+  /** Only rendered when Paystack has a payout scheduled but not yet paid. */
+  pendingNote: (amount: string) =>
+    `${amount} more has been collected and is on its way to the kindness account. It is not counted above until it lands.`,
   givenNote: "Totalled from the entries below.",
 } as const;
