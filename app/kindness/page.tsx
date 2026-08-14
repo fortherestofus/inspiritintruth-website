@@ -31,33 +31,29 @@ function rands(value: number | null): string {
 }
 
 /**
- * One figure in the summary. Deliberately not a card — the three of them live
- * inside a single well, divided by rules, so the summary reads as one
- * instrument rather than three boxes all saying R0.
+ * One figure in the summary. Deliberately not a card — both of them live inside
+ * a single well so the summary reads as one instrument rather than a row of
+ * boxes each saying R0.
  */
 function Figure({
   label,
   value,
   note,
-  lead = false,
+  dot,
 }: {
   label: string;
   value: string;
   note: string;
-  /** The figure the page is actually about, sized to say so. */
-  lead?: boolean;
+  /** Ties the figure to its band in the bar below. */
+  dot?: string;
 }) {
   return (
-    <div className="px-6 py-5 sm:px-7 sm:py-6">
+    <div className="px-6 py-6 sm:px-7 sm:py-7">
       <p className="flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.14em] text-faint">
-        {lead && <span className="h-2 w-2 rounded-full bg-kindness" />}
+        {dot && <span className={`h-2 w-2 rounded-full ${dot}`} />}
         {label}
       </p>
-      <p
-        className={`nums mt-2.5 font-medium leading-none tracking-[-0.03em] text-ink ${
-          lead ? "text-[2.5rem] sm:text-[3rem]" : "text-[1.75rem]"
-        }`}
-      >
+      <p className="nums mt-2.5 text-[2.5rem] font-medium leading-none tracking-[-0.03em] text-ink">
         {value}
       </p>
       <p className="mt-2 text-[0.875rem] leading-snug text-faint">{note}</p>
@@ -106,19 +102,28 @@ export default async function KindnessPage() {
           ))}
         </div>
 
-        {/* One well, ruled into parts — not three cards. Given leads because it
-            is the figure the page exists to report; Received and Held are the
-            arithmetic behind it. */}
+        {/* The fund in two numbers, in the order the money moves: what came in
+            for kindness, and what has gone out of it. What is still held is the
+            difference, and is shown by the bar rather than given a column of
+            its own — a third figure that is only the other two subtracted adds
+            a number without adding a fact. */}
         <div className="mt-12 overflow-hidden rounded-well border border-border bg-surface shadow-card">
-          <Figure
-            lead
-            label="Given"
-            value={rands(given)}
-            note={KINDNESS_PAGE.givenNote(entries?.length ?? 0)}
-          />
+          <div className="grid divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+            <Figure
+              label="Received"
+              value={rands(received)}
+              note={KINDNESS_PAGE.receivedNote}
+            />
+            <Figure
+              dot="bg-kindness"
+              label="Given out"
+              value={rands(given)}
+              note={KINDNESS_PAGE.givenNote(entries?.length ?? 0)}
+            />
+          </div>
 
           {showBar && (
-            <div className="px-6 pb-6 sm:px-7 sm:pb-7">
+            <div className="border-t border-border px-6 py-6 sm:px-7 sm:py-7">
               {/* One bar divided, not two side by side — same shape as the
                   gift split on the giving section. */}
               <div className="flex h-2.5 overflow-hidden rounded-full bg-sunken">
@@ -128,32 +133,21 @@ export default async function KindnessPage() {
               <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-[0.8125rem] text-faint">
                 <span className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-kindness" />
-                  {KINDNESS_PAGE.legend.given}
+                  {KINDNESS_PAGE.legend.given} {rands(given)}
                 </span>
                 <span className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full border border-border bg-sunken" />
-                  {KINDNESS_PAGE.legend.held}
+                  {KINDNESS_PAGE.legend.held} {rands(held)}
                 </span>
               </div>
             </div>
           )}
 
-          <div className="grid divide-y divide-border border-t border-border sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-            <Figure
-              label="Received"
-              value={rands(received)}
-              note={KINDNESS_PAGE.receivedNote}
-            />
-            <Figure
-              label={held !== null && held < 0 ? "Given ahead" : "Held"}
-              value={rands(held === null ? null : Math.abs(held))}
-              note={
-                held !== null && held < 0
-                  ? KINDNESS_PAGE.aheadNote
-                  : KINDNESS_PAGE.heldNote
-              }
-            />
-          </div>
+          {held !== null && held < 0 && (
+            <p className="border-t border-border px-6 py-5 text-[0.875rem] leading-snug text-faint sm:px-7">
+              {KINDNESS_PAGE.aheadNote}
+            </p>
+          )}
         </div>
 
         <div className="mt-16">

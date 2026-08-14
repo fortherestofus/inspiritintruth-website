@@ -190,18 +190,26 @@ export const KINDNESS_PAGE = {
   /** Shown when Supabase or Paystack could not be reached. */
   unavailable:
     "We could not load this just now. It is a problem on our side, not a sign that the fund is empty — please try again shortly.",
-  receivedNote: "Settled into the kindness account.",
-  heldNote: "Received, not yet given.",
-  /**
-   * Held goes negative whenever we give ahead of what has settled, which is a
-   * normal thing to do and not an error. Naming it beats showing a minus sign
-   * and letting it read as a bug.
+  /*
+   * Two figures, not three. Held used to sit alongside these and was dropped:
+   * it is Received minus Given, so it added a third number without adding a
+   * third fact, and its note ("Received, not yet given") only restated its own
+   * label. What is still held is now shown by the bar instead, where it costs
+   * a colour rather than a column.
+   *
+   * Each note has to say something the label does not. Check that before
+   * adding one back.
    */
-  aheadNote: "Given ahead of what has settled.",
+  receivedNote: "Settled into the kindness account.",
   givenNote: (count: number) =>
     count === 0 ? "Nothing yet." : `Across ${count} ${count === 1 ? "entry" : "entries"}.`,
   /** Bar legend, when there is something to divide. */
-  legend: { given: "Given", held: "Held" },
+  legend: { given: "Given", held: "Still to give" },
+  /**
+   * Giving ahead of settlement is a normal thing to do, not an error — but it
+   * makes the bar meaningless, so the bar goes and this takes its place.
+   */
+  aheadNote: "We have given ahead of what has settled so far.",
   /**
    * Demoted to a footnote. Giving half away invites the assumption that this is
    * a charity and it is not, so the correction stays — but the Giving FAQs
