@@ -39,6 +39,17 @@ const SHARE_LINK_FN =
 const nextConfig = {
   // Server-mode build (so `next start` works on Hostinger), same as FTROU.
   trailingSlash: true,
+  // ...but WITHOUT the automatic 308 that trailingSlash normally adds.
+  // Share links are sent from the app as /d/<slug> (no slash), and Apple's
+  // LinkPresentation — which builds the iMessage preview card on the
+  // sender's device — mishandles that 308 hop: instead of following it to
+  // the HTML page it presented the share as a downloadable "Text Document"
+  // of raw markup (observed from a real share, Aug 2026). WhatsApp's
+  // crawler follows the same 308 fine, which is why only iMessage broke.
+  // With the skip, /d/<slug> and /d/<slug>/ both serve directly; internal
+  // marketing links keep their trailing slashes (trailingSlash still shapes
+  // link generation — only the redirect is dropped).
+  skipTrailingSlashRedirect: true,
   images: { unoptimized: true },
 
   // The Apple association file sets its own Content-Type from a route handler
