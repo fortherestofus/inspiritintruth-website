@@ -64,24 +64,27 @@ export default function Navbar() {
         }`}
       >
         {/* Both logo variants ship and swap via CSS rather than reading the
-            theme in JS — no hydration mismatch, no flash of the wrong mark. */}
+            theme in JS — no hydration mismatch, no flash of the wrong mark.
+            The stacked wordmark is 2.47:1 (the old horizontal lockup was
+            7.5:1), so it needs more height to keep the INTRUTH line legible —
+            h-10 rather than h-7, which still leaves it narrower than before. */}
         <Link href="/#top" className="flex items-center" aria-label="InSpiritInTruth — home">
           <Image
             src="/icons/logo-lockup-ink.png"
             alt="InSpiritInTruth"
-            width={1742}
-            height={232}
+            width={1024}
+            height={413}
             priority
-            className="h-7 w-auto dark:hidden"
+            className="h-10 w-auto dark:hidden"
           />
           <Image
             src="/icons/logo-lockup-cream.png"
             alt=""
             aria-hidden
-            width={1742}
-            height={232}
+            width={1024}
+            height={413}
             priority
-            className="hidden h-7 w-auto dark:block"
+            className="hidden h-10 w-auto dark:block"
           />
         </Link>
 

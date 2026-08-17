@@ -18,9 +18,9 @@ export default function Footer() {
             <Image
               src="/icons/logo-lockup-cream.png"
               alt="InSpiritInTruth"
-              width={1742}
-              height={232}
-              className="h-8 w-auto"
+              width={1024}
+              height={413}
+              className="h-11 w-auto"
             />
             <p className="mt-4 text-pretty leading-relaxed text-ink-muted">
               A real-life devotional app for imperfect journeys. Faith at the
