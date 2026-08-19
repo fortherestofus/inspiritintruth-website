@@ -28,13 +28,6 @@ const securityHeaders = [
   },
 ];
 
-// The share-link edge function that renders /d/<slug> (devotionals) and
-// /v/<reference> (verses). This domain is the public face of those links, so
-// the rewrites below are what make a shared link resolve — they replace the
-// WordPress Redirection-plugin rules from the app build.
-const SHARE_LINK_FN =
-  "https://xjhkvphnxzuqookjqkjc.supabase.co/functions/v1/share-link";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Server-mode build (so `next start` works on Hostinger), same as FTROU.
@@ -80,9 +73,15 @@ const nextConfig = {
       // previous screenshot from the same URL — which is precisely what
       // happened when the tailored-devotional captures were swapped and the
       // old ones kept showing for everyone who had already loaded the page.
+      // /d/ and /v/ are excluded: those route handlers set their own
+      // `no-store`, and this blanket rule would otherwise override it. They
+      // MUST NOT be shared-cached — the page varies by User-Agent (the
+      // "open in the app" link is an Android intent:// or an iOS custom
+      // scheme), so one cached copy would hand the wrong platform's link to
+      // everyone. A slug can also be unshared at any time.
       {
         source:
-          "/((?!_next/static|_next/image|icons|fonts|\\.well-known).*)",
+          "/((?!_next/static|_next/image|icons|fonts|d/|v/|\\.well-known).*)",
         headers: [
           {
             key: "Cache-Control",
@@ -93,14 +92,13 @@ const nextConfig = {
     ];
   },
 
-  // Rewrite (not redirect) so the shared URL stays in the address bar and the
-  // universal-link match on the app side is not broken by a 30x hop.
-  async rewrites() {
-    return [
-      { source: "/d/:slug", destination: `${SHARE_LINK_FN}/d/:slug` },
-      { source: "/v/:reference", destination: `${SHARE_LINK_FN}/v/:reference` },
-    ];
-  },
+  // /d/<slug> and /v/<ref> are NOT rewrites any more. A rewrite streams the
+  // upstream headers through verbatim, and Supabase downgrades text/html to
+  // text/plain on its own domain — so a shared devotional rendered as raw
+  // markup. They are route handlers now (app/d/[slug], app/v/[reference]),
+  // which fetch the same function but re-emit the body under our own
+  // Content-Type. The shared URL still stays in the address bar, so the
+  // universal-link match on the app side is unaffected.
 };
 
 export default nextConfig;
