@@ -140,14 +140,14 @@ export const HOW_MADE = {
   eyebrow: "How our devotions are made",
   title: "Scripture first. Always.",
   paragraphs: [
-    "Some devotions are written by everyday believers like you and me. Where technology helps, it draws from Scripture first, then trusted voices like Matthew Henry's commentary, writers like C.S. Lewis, and what we've learned from psychology.",
-    "Every devotion follows a careful template, is checked by our system and then by us. Where something slips through, we trust our community to tell us so we keep getting better.",
+    "Curated devotions are written and edited by hand before they are published. Tailored devotions are AI-assisted, and they draw from Scripture first, then trusted voices like Matthew Henry's commentary, writers like C.S. Lewis, and credible psychology.",
+    "Both follow a careful template, and both go through an automated scripture and fact check: every verse is fetched from the actual text of Scripture rather than quoted from a machine, and any quote is checked for authenticity and attribution. No one reads a tailored devotion before you do, so where something slips through, we trust our community to tell us and we keep getting better.",
   ],
   /** Small trust markers, in reading order. */
   markers: [
     { label: "Scripture", note: "First and most important source of truth" },
     { label: "Trusted voices", note: "Matthew Henry, C.S. Lewis, and more" },
-    { label: "Checked twice", note: "By our system, then by us" },
+    { label: "Checked twice", note: "Scripture re-fetched, then claims fact-checked" },
   ],
 } as const;
 
@@ -263,7 +263,7 @@ export const FAQ = [
   },
   {
     q: "How are the tailored devotionals written?",
-    a: "You share what you're going through and a devotional is written for that moment — drawing on Scripture first, then trusted voices like Matthew Henry's commentary and writers like C.S. Lewis. Every one follows a careful template, is checked by our system, and then by us.",
+    a: "You share what you're going through and a devotional is written for that moment — drawing on Scripture first, then trusted voices like Matthew Henry's commentary and writers like C.S. Lewis. Every one follows a careful template and goes through an automated scripture and fact check. No one here reads it before you do, which is why we ask you to weigh it against Scripture yourself.",
   },
   {
     q: "Can you read what I write?",
