@@ -16,7 +16,7 @@
  */
 import { HELLO_EMAIL, LEGAL_EMAIL, SITE_URL } from "@/lib/site";
 
-export const LEGAL_LAST_UPDATED = "14 August 2026";
+export const LEGAL_LAST_UPDATED = "20 August 2026";
 
 const STUDIO = "For The Rest Of Us";
 
@@ -105,7 +105,7 @@ export const PRIVACY_SECTIONS = [
       "Supabase — accounts, authentication, and the database where your devotionals, notes, bookmarks and preferences are stored.",
       "Anthropic — generates tailored devotionals from the text you share, as described above.",
       "API.Bible and helloao — supply the Bible text you read. Passage requests are served without an account, and we do not send them anything that identifies you.",
-      "RevenueCat — manages Premium subscription status across platforms.",
+      "RevenueCat — manages Premium subscription status across platforms. We send it your account id, and your name and email address, so we can recognise your subscription and find your account if you contact us for help.",
       "Paystack — processes gifts made on our website. Your first name, surname and email address are stored against a Paystack customer record so gifts, receipts and our kindness-report email can reach the right person; your card details go directly to Paystack. None of it reaches our own servers, and we keep no separate record of the gift. Paystack's own privacy terms govern what they hold.",
       "Apple and Google — process subscription payments made through their stores under their own terms, and deliver push notifications.",
       "Expo — delivers push notifications to your device.",
