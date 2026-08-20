@@ -40,7 +40,7 @@ export const STORY = [
     eyebrow: "For what you are carrying",
     title: "Tell it what is going on. It writes for that.",
     body:
-      "When the weekly devotional is not the thing you need, describe what you are feeling or facing and get a personal, scripture-rooted reflection written for that moment. Not a generic prepared study that may or may not meet your need. And what you write is not stored — it writes your devotional, then it is gone, so you can be honest in it.",
+      "When the weekly devotional is not the thing you need, describe what you are feeling or facing and get a personal, scripture-rooted reflection written for that moment. Not a generic prepared study that may or may not meet your need. What you share is only used to create your devotional and is never stored or shared, so you can be honest here.",
     image: "/screenshots/isit-personalise-2.jpg",
   },
   {
@@ -267,7 +267,7 @@ export const FAQ = [
   },
   {
     q: "Can you read what I write?",
-    a: "No — because we don't keep it. What you type is used to write your devotional and is not stored afterwards, so there is no copy on our side for anyone to read, leak, or be made to hand over. It is never published, never shown to another reader, never sold, and never used to train an AI model. The only copy is the unfinished draft your own phone holds so a failed attempt doesn't cost you your words, and that clears the moment your devotional is written.",
+    a: "No, because we don't keep it. What you share is only used to create your devotional. It is never stored, so there is no copy on our side for anyone to read or hand over. It is never shown to another reader, never sold, and never used to train an AI model. The only copy lives on your own phone: an unfinished draft kept so a failed attempt doesn't lose your words, cleared the moment your devotional is written.",
   },
   {
     q: "Which Bible versions are included?",
