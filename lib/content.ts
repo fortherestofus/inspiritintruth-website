@@ -40,7 +40,7 @@ export const STORY = [
     eyebrow: "For what you are carrying",
     title: "Tell it what is going on. It writes for that.",
     body:
-      "When the weekly devotional is not the thing you need, describe what you are feeling or facing and get a personal, scripture-rooted reflection written for that moment. Not a generic prepared study that may or may not meet your need.",
+      "When the weekly devotional is not the thing you need, describe what you are feeling or facing and get a personal, scripture-rooted reflection written for that moment. Not a generic prepared study that may or may not meet your need. And what you write is not stored — it writes your devotional, then it is gone, so you can be honest in it.",
     image: "/screenshots/isit-personalise-2.jpg",
   },
   {
@@ -264,6 +264,10 @@ export const FAQ = [
   {
     q: "How are the tailored devotionals written?",
     a: "You share what you're going through and a devotional is written for that moment — drawing on Scripture first, then trusted voices like Matthew Henry's commentary and writers like C.S. Lewis. Every one follows a careful template, is checked by our system, and then by us.",
+  },
+  {
+    q: "Can you read what I write?",
+    a: "No — because we don't keep it. What you type is used to write your devotional and is not stored afterwards, so there is no copy on our side for anyone to read, leak, or be made to hand over. It is never published, never shown to another reader, never sold, and never used to train an AI model. The only copy is the unfinished draft your own phone holds so a failed attempt doesn't cost you your words, and that clears the moment your devotional is written.",
   },
   {
     q: "Which Bible versions are included?",

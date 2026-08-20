@@ -31,7 +31,7 @@ export const PRIVACY_SECTIONS = [
     bullets: [
       "We do not sell your personal information. Not to advertisers, not to anyone.",
       "There are no ads in InSpiritInTruth, and no ad tracking.",
-      "What you write when you ask for a tailored devotional is used to write that devotional, and to show it back to you later. It is not used to train anyone's AI model.",
+      "What you write when you ask for a tailored devotional is used to write it — and then not kept. We store the devotional, not your words. It is not used to train anyone's AI model.",
       "You can read, export, correct or permanently delete everything we hold about you, at any time.",
       "The rest of this document is the detail behind those four statements.",
     ],
@@ -52,7 +52,7 @@ export const PRIVACY_SECTIONS = [
     ],
     bullets: [
       "Account information — your email address, and your name or display name if you give one. If you sign in with Apple or Google we receive a unique identifier and the email you choose to share, including Apple's private relay address if you opt to hide your real one. We never receive your Apple or Google password.",
-      "What you share for a tailored devotional — the words you write when you tell the app what you are going through, feeling, facing or curious about. This is the most sensitive thing we hold and it has its own section below.",
+      "What you share for a tailored devotional — the words you write when you tell the app what you are going through, feeling, facing or curious about. This is the most sensitive thing you give us, and it is the one thing we deliberately do not keep. It has its own section below.",
       "Your practice in the app — devotionals you read or save, verses you bookmark, notes and reflections you write, reading plans you follow, your streak, and the topics you explore.",
       "Subscription records — whether your account has an active Premium subscription, so the app knows what to unlock. We never see or store your full card number, CVV, or bank details.",
       "Technical information — device type, operating system version, app version, language and region, crash and error diagnostics, and your notification token if you turn notifications on. We use this to keep the app working, not to build a profile of you.",
@@ -65,8 +65,10 @@ export const PRIVACY_SECTIONS = [
     body: [
       "Two categories of what we hold are treated as special or sensitive personal information by law: information revealing your religious beliefs, and anything about your health — including mental and emotional health. Using a devotional app reveals the first. Writing “I am anxious about my marriage” or “I am grieving” reveals the second.",
       "We handle this on the basis of your explicit consent, which you give by choosing to write it and asking for a devotional. You are never required to share anything to use the app: the weekly devotionals, the Bible reader, daily verses, bookmarks and notes all work without you telling us a single personal thing.",
-      "What you share is visible to you. It is not published, not shown to other users, not shared with any church or organisation, and not used to target you with anything. A small number of our team can access it only where strictly necessary — investigating a fault you have reported, or where the law requires it — and we log that access.",
-      "You can delete any individual entry, or all of it at once, from within the app. Deleting it removes it from the devotional it produced as well.",
+      "So we do not store it. Your words are used to write your devotional and are then discarded — they are not saved to your account, and there is no copy on our servers for anyone here to open, no copy to leak in a breach, and no copy we could be compelled to hand over. That is not a policy we promise to follow; it is the way the app is built. What we do keep about the request is deliberately shapeless: which feeling you tapped, how long you asked for, and how many characters you typed. None of it can reconstruct a word of what you said.",
+      "It is never published, never shown to another reader, never shared with any church or organisation, never sold, and never used to target you with anything.",
+      "The devotional that comes back is a different matter, because it is yours to keep: it is saved to your library so you can read it again, and it stays until you delete it. It is private to your account. Deleting it from the app removes it from our systems.",
+      "One honest limit: to write your devotional at all, your words have to reach the model that writes it. That journey is described in the next section.",
     ],
   },
   {
@@ -74,7 +76,7 @@ export const PRIVACY_SECTIONS = [
     heading: "How we use your information",
     bullets: [
       "To create your account, sign you in and keep it secure.",
-      "To write tailored devotionals from what you share, and to show them to you again later in your library.",
+      "To write tailored devotionals from what you share, and to show the finished devotionals to you again later in your library. What you wrote to get there is not retained.",
       "To keep your bookmarks, notes, plans and streak in sync across your devices.",
       "To send the notifications you have asked for, and nothing else. You choose whether to receive them and can turn them off at any time, in the app or in your device settings.",
       "To keep your Premium subscription in step across your devices, and to honour cancellations.",
@@ -88,7 +90,7 @@ export const PRIVACY_SECTIONS = [
     heading: "The AI that writes your devotionals",
     body: [
       "Tailored devotionals are generated using Claude, a large language model provided by Anthropic. When you ask for one, the text you wrote is sent to Anthropic's API together with our instructions and the scripture references involved, and the devotional comes back to us and then to you.",
-      "Anthropic processes that text on our behalf as our service provider. Under our commercial terms with them, your text is not used to train their models. We do not use it to train any model either, and we do not sell or share it.",
+      "Anthropic processes that text on our behalf as our service provider. Under our commercial terms with them, your text is not used to train their models. We do not use it to train any model either, and we do not sell or share it. Once the devotional comes back, we keep the devotional and discard what you wrote.",
       "AI gets things wrong. Every devotional follows a fixed template and is checked by our system, and we review the content that goes out. Scripture is always the first and governing source. If something reads as off, unbiblical, or simply wrong, please tell us at " +
         HELLO_EMAIL +
         " — reports from readers are how this stays trustworthy.",
