@@ -53,9 +53,9 @@ export const PRIVACY_SECTIONS = [
     bullets: [
       "Account information — your email address, and your name or display name if you give one. If you sign in with Apple or Google we receive a unique identifier and the email you choose to share, including Apple's private relay address if you opt to hide your real one. We never receive your Apple or Google password.",
       "What you share for a tailored devotional — the words you write when you tell the app what you are going through, feeling, facing or curious about. This is the most sensitive thing you give us, and it is the one thing we deliberately do not keep. It has its own section below.",
-      "Your practice in the app — devotionals you read or save, verses you bookmark, notes and reflections you write, reading plans you follow, your streak, and the topics you explore.",
+      "Your practice in the app — devotionals you read or save, verses you bookmark, notes and reflections you write, your streak, and the themes you explore.",
       "Subscription records — whether your account has an active Premium subscription, so the app knows what to unlock. We never see or store your full card number, CVV, or bank details.",
-      "Technical information — device type, operating system version, app version, language and region, crash and error diagnostics, and your notification token if you turn notifications on. We use this to keep the app working, not to build a profile of you.",
+      "Technical information — device type, operating system version, app version, language and region, and your notification token if you turn notifications on. We use this to keep the app working, not to build a profile of you. We do not currently use any analytics or crash-reporting tools at all; if that changes, this page and our App Store privacy labels change with it.",
       "Giving details — if you give on our website, your first name, surname and email address. We ask for a name so a receipt, a reply, or the email telling you where the kindness share went can address you as a person rather than an inbox. These are held by Paystack, our payment processor, not on our own servers. Giving is entirely optional and none of it is linked to your app account.",
     ],
   },
