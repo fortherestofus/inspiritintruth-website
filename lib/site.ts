@@ -18,12 +18,12 @@ export const LEGAL_EMAIL = "legal@fortherestofus.app";
 /**
  * App Store / Play links.
  *
- * The app is not published yet, so these are null and every store button
- * renders in its "coming soon" state. Drop the real URLs in at launch and
- * every badge on the site goes live at once.
+ * iOS went live on the App Store on 2026-08-27. Android is still null, so
+ * its badge stays in the "coming soon" state until the Play listing exists;
+ * dropping the URL in here is all it takes to light it up.
  */
 export const STORE_LINKS: { ios: string | null; android: string | null } = {
-  ios: null,
+  ios: "https://apps.apple.com/app/inspiritintruth-devotional/id6795657774",
   android: null,
 };
 
