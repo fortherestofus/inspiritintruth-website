@@ -47,7 +47,7 @@ export const STORY = [
     eyebrow: "The whole Bible, in hand",
     title: "Verses, bookmarks, and notes that stay yours.",
     body:
-      "A full in-app Bible, a daily verse to keep you connected between devotionals, and somewhere to keep the passages and thoughts you return to. No algorithm, no ads, no pressure to perform.",
+      "A full in-app Bible, a daily verse to keep you connected between devotionals, and somewhere to keep the passages and thoughts you return to. No attention-chasing feed, no ads, no pressure to perform.",
     image: "/screenshots/isit-bible.jpg",
   },
 ] as const;
@@ -115,13 +115,23 @@ export const INSIDE = [
   },
   {
     icon: "Layers",
-    title: "Curated devotionals & plans",
-    body: "Reading plans you can follow at your own pace.",
+    title: "Curated devotionals",
+    body: "A growing library to read at your own pace, browsable by theme.",
+  },
+  {
+    icon: "Compass",
+    title: "Devotionals chosen for you",
+    body: "The home screen leans toward the themes you keep reading and the ones you've had written for you.",
   },
   {
     icon: "Quote",
     title: "A verse each day",
     body: "Plus topics to explore when you need them: love, anxiety, hope and more.",
+  },
+  {
+    icon: "Download",
+    title: "An offline Bible",
+    body: "Download the whole Bible and read it with no signal at all.",
   },
   {
     icon: "Flame",

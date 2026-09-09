@@ -1,8 +1,10 @@
 /**
- * What's inside — the six-card grid, straight from copy.md's WHAT'S INSIDE.
+ * What's inside — the card grid, straight from copy.md's WHAT'S INSIDE.
  */
 import {
   BookOpen,
+  Compass,
+  Download,
   Flame,
   Layers,
   Moon,
@@ -16,7 +18,9 @@ const ICONS: Record<string, LucideIcon> = {
   Sparkles,
   BookOpen,
   Layers,
+  Compass,
   Quote,
+  Download,
   Flame,
   Moon,
 };
