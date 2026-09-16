@@ -43,8 +43,7 @@ globally in `app/globals.css`. Light and dark are both defined.
 
 - [ ] **Giving provider** — set `GIVING.provider` + `url` in `lib/site.ts`
       (currently `"undecided"`, which renders a placeholder in the give card)
-- [ ] **Store URLs** — `STORE_LINKS` is `null/null`; every badge shows
-      "Coming soon" until filled
+- [x] **Store URLs** — iOS and Google Play both set in `STORE_LINKS`
 - [ ] **`ANDROID_CERT_SHA256`** — `public/.well-known/assetlinks.json` still
       holds a placeholder fingerprint
 - [ ] **Legal review** — `lib/legal.ts` is a thorough draft, not

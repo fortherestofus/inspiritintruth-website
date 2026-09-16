@@ -18,13 +18,12 @@ export const LEGAL_EMAIL = "legal@fortherestofus.app";
 /**
  * App Store / Play links.
  *
- * iOS went live on the App Store on 2026-08-27. Android is still null, so
- * its badge stays in the "coming soon" state until the Play listing exists;
- * dropping the URL in here is all it takes to light it up.
+ * iOS went live on the App Store on 2026-08-27; Android went live on Google
+ * Play on 2026-09-16.
  */
 export const STORE_LINKS: { ios: string | null; android: string | null } = {
   ios: "https://apps.apple.com/app/inspiritintruth-devotional/id6795657774",
-  android: null,
+  android: "https://play.google.com/store/apps/details?id=com.fortherestofus.inspirit",
 };
 
 export const APP_IS_LIVE = Boolean(STORE_LINKS.ios || STORE_LINKS.android);
