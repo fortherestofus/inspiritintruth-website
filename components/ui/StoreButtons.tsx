@@ -11,7 +11,11 @@
  * soon" note carries that instead — the badge itself stays unmodified rather
  * than being dimmed. One edit in lib/site.ts turns every instance live.
  */
+"use client";
+
 import Image from "next/image";
+import posthog from "posthog-js";
+
 import { STORE_LINKS, APP_IS_LIVE } from "@/lib/site";
 
 const BADGE_HEIGHT = 48;
@@ -21,10 +25,12 @@ function Badge({
   href,
   src,
   alt,
+  platform,
 }: {
   href: string | null;
   src: string;
   alt: string;
+  platform: "ios" | "android";
 }) {
   const img = (
     <Image
@@ -52,6 +58,9 @@ function Badge({
       target="_blank"
       rel="noreferrer"
       className="inline-flex transition-transform duration-200 hover:-translate-y-0.5"
+      // The one click on this site worth measuring: it is the last thing
+      // we can see before an install, which carries no referrer of its own.
+      onClick={() => posthog.capture("store_badge_clicked", { platform })}
     >
       {img}
     </a>
@@ -72,11 +81,13 @@ export default function StoreButtons({
           href={STORE_LINKS.ios}
           src="/icons/download-on-the-app-store-1.svg"
           alt="Download on the App Store"
+          platform="ios"
         />
         <Badge
           href={STORE_LINKS.android}
           src="/icons/google-play-badge-2022-2.svg"
           alt="Get it on Google Play"
+          platform="android"
         />
       </div>
       {!APP_IS_LIVE && (

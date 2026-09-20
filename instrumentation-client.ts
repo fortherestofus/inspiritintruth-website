@@ -1,0 +1,54 @@
+/**
+ * PostHog web analytics — inspiritintruth.net.
+ *
+ * WHY IT EXISTS: the one step before an install that is actually
+ * measurable. An app install carries no referrer, so nothing can tell
+ * you where a download came from (that lives in App Store Connect and
+ * Play Console). What IS knowable is how many people reach this site and
+ * then tap through to a store badge — which is the only evidence this
+ * site earns its keep.
+ *
+ * COOKIELESS, DELIBERATELY. `cookieless_mode: 'always'` means PostHog
+ * stores nothing in cookies, localStorage or sessionStorage. No consent
+ * banner is needed, because there is nothing to consent to — which
+ * matches the promise the app makes rather than fighting it. The
+ * trade-off is real and accepted: no cross-visit identity, and country
+ * is not resolved on web events (PostHog strips the IP before its GeoIP
+ * step in this mode). Neither costs us the question we are asking.
+ *
+ * Events go to the SAME project as the app (279600), so a visit and an
+ * app open sit in one place. They are distinguishable by `$host` and by
+ * `$lib` being `web` rather than `posthog-react-native`.
+ */
+import posthog from "posthog-js";
+
+/**
+ * Written here rather than read from an env var, on purpose. A PostHog
+ * PROJECT key only permits sending events, and `NEXT_PUBLIC_*` values
+ * are inlined into the client bundle at build time anyway — so an env
+ * var would be exactly as public as this constant, while adding a way
+ * for the build on Hostinger to silently end up without it and quietly
+ * collect nothing. EU cloud; the US host ingests nothing.
+ */
+const KEY = "phc_wWTjtN8SbviS5ANvbAEiZmH5dZEVCBodMsbKmE6D2PB8";
+const HOST = "https://eu.i.posthog.com";
+
+if (process.env.NODE_ENV === "production") {
+  posthog.init(KEY, {
+    api_host: HOST,
+    // No cookies, no local storage, no banner. See the note above.
+    cookieless_mode: "always",
+    // Pageviews follow client-side route changes, not just hard loads —
+    // this is an App Router site and most navigation never reloads.
+    capture_pageview: "history_change",
+    // Autocapture would record clicks on every element including the
+    // text inside them. The store-badge click is captured explicitly in
+    // components/ui/StoreButtons.tsx, which is the only click that
+    // answers a question we actually have.
+    autocapture: false,
+    // Nothing here is worth recording someone's screen for, and the
+    // app's policy says we never do.
+    disable_session_recording: true,
+    capture_heatmaps: false,
+  });
+}

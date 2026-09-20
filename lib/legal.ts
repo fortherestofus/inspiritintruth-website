@@ -113,6 +113,7 @@ export const PRIVACY_SECTIONS = [
       "Apple and Google — process subscription payments made through their stores under their own terms, and deliver push notifications.",
       "Expo — delivers push notifications to your device.",
       "PostHog — product analytics: the usage events described above, so we can tell which parts of the app are genuinely used rather than guessing. Their European servers, and we have configured it to discard IP addresses. It receives your account id so a phone and a tablet count as one person; it does not receive your name or your email address, and it never receives anything you wrote.",
+      "PostHog also counts visits to this website — which pages are read, and whether anyone taps through to an app store. On the website it runs without cookies of any kind: nothing is stored in your browser, nothing follows you between visits, and there is no consent banner because there is nothing to consent to.",
       "Sentry — crash and error reports, so a crash that happens to you can be fixed rather than guessed at. It is configured not to attach your name, email address or IP address, and to throw away the app's own internal logs before sending, so nothing you wrote can travel inside a crash report.",
       "We may also disclose information where the law genuinely requires it, to protect someone's safety, or to a buyer if the app is ever transferred — in which case this policy travels with it and we will tell you first.",
     ],
