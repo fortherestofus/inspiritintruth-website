@@ -16,7 +16,7 @@
  */
 import { HELLO_EMAIL, LEGAL_EMAIL, SITE_URL } from "@/lib/site";
 
-export const LEGAL_LAST_UPDATED = "20 August 2026";
+export const LEGAL_LAST_UPDATED = "20 September 2026";
 
 const STUDIO = "For The Rest Of Us";
 
@@ -55,7 +55,8 @@ export const PRIVACY_SECTIONS = [
       "What you share for a tailored devotional — the words you write when you tell the app what you are going through, feeling, facing or curious about. This is the most sensitive thing you give us, and it is the one thing we deliberately do not keep. It has its own section below.",
       "Your practice in the app — devotionals you read or save, verses you bookmark, notes and reflections you write, your streak, and the themes you explore.",
       "Subscription records — whether your account has an active Premium subscription, so the app knows what to unlock. We never see or store your full card number, CVV, or bank details.",
-      "Technical information — device type, operating system version, app version, language and region, and your notification token if you turn notifications on. We use this to keep the app working, not to build a profile of you. We do not currently use any analytics or crash-reporting tools at all; if that changes, this page and our App Store privacy labels change with it.",
+      "Technical information — device type, operating system version, app version, language and region, and your notification token if you turn notifications on. We use this to keep the app working, not to build a profile of you.",
+      "How you use the app — which screens you open, whether you finish a devotional, whether a tailored devotional was written or failed, and whether you opened the Premium page. This is a fixed list we wrote by hand: every item is a label, a number or a yes/no, and the app is built so nothing else can be added to it by accident. It never contains a word you typed. It can tell us the Create screen was opened; it can never tell us what was written there. We do not record your screen, and we do not track you across other apps or websites.",
       "Giving details — if you give on our website, your first name, surname and email address. We ask for a name so a receipt, a reply, or the email telling you where the kindness share went can address you as a person rather than an inbox. These are held by Paystack, our payment processor, not on our own servers. Giving is entirely optional and none of it is linked to your app account.",
     ],
   },
@@ -111,6 +112,8 @@ export const PRIVACY_SECTIONS = [
       "Paystack — processes gifts made on our website. Your first name, surname and email address are stored against a Paystack customer record so gifts, receipts and our kindness-report email can reach the right person; your card details go directly to Paystack. None of it reaches our own servers, and we keep no separate record of the gift. Paystack's own privacy terms govern what they hold.",
       "Apple and Google — process subscription payments made through their stores under their own terms, and deliver push notifications.",
       "Expo — delivers push notifications to your device.",
+      "PostHog — product analytics: the usage events described above, so we can tell which parts of the app are genuinely used rather than guessing. Their European servers, and we have configured it to discard IP addresses. It receives your account id so a phone and a tablet count as one person; it does not receive your name or your email address, and it never receives anything you wrote.",
+      "Sentry — crash and error reports, so a crash that happens to you can be fixed rather than guessed at. It is configured not to attach your name, email address or IP address, and to throw away the app's own internal logs before sending, so nothing you wrote can travel inside a crash report.",
       "We may also disclose information where the law genuinely requires it, to protect someone's safety, or to a buyer if the app is ever transferred — in which case this policy travels with it and we will tell you first.",
     ],
   },
@@ -120,6 +123,8 @@ export const PRIVACY_SECTIONS = [
     bullets: [
       "We never sell your personal information.",
       "We never show you ads, and we do not use advertising or cross-site tracking technology.",
+      "We never record your screen. There is no session replay in the app.",
+      "We never let our analytics or crash reports see what you write. They are built to carry labels and counts, not sentences.",
       "We never share what you wrote about your own life with other users, churches, or organisations.",
       "We never use your personal reflections to train AI models.",
       "We never ask for your card details directly, and we cannot see them.",
