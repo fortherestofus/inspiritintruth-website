@@ -54,4 +54,13 @@ if (process.env.NODE_ENV === "production") {
     disable_session_recording: true,
     capture_heatmaps: false,
   });
+
+  // Fired explicitly rather than left to `capture_pageview`.
+  // MEASURED, not assumed: with `history_change` the site produced
+  // $pageleave events and no $pageview at all, and removing the option
+  // (so it fell back to the library default) changed nothing — exits
+  // recorded with no visits, which is worse than no data because it
+  // looks like it works. One explicit call is deterministic, and the
+  // thing being counted here is page loads anyway.
+  posthog.capture("$pageview");
 }
