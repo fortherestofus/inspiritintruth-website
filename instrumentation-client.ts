@@ -38,9 +38,12 @@ if (process.env.NODE_ENV === "production") {
     api_host: HOST,
     // No cookies, no local storage, no banner. See the note above.
     cookieless_mode: "always",
-    // Pageviews follow client-side route changes, not just hard loads —
-    // this is an App Router site and most navigation never reloads.
-    capture_pageview: "history_change",
+    // Left at the default (capture on page load). `history_change` was
+    // tried first and measurably did NOT fire the initial $pageview on
+    // this site — production showed three $pageleave events and zero
+    // $pageview, i.e. exits recorded with no visits. This is a mostly
+    // static marketing site where navigation is full page loads anyway,
+    // so page-load pageviews are both correct and simpler.
     // Autocapture would record clicks on every element including the
     // text inside them. The store-badge click is captured explicitly in
     // components/ui/StoreButtons.tsx, which is the only click that
