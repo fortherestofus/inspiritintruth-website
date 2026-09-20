@@ -73,7 +73,7 @@ const nextConfig = {
       // previous screenshot from the same URL — which is precisely what
       // happened when the tailored-devotional captures were swapped and the
       // old ones kept showing for everyone who had already loaded the page.
-      // /d/, /v/ and /rate are excluded: those route handlers set their own
+      // /d/ and /v/ are excluded: those route handlers set their own
       // `no-store`, and this blanket rule would otherwise override it. They
       // MUST NOT be shared-cached — the page varies by User-Agent (the
       // "open in the app" link is an Android intent:// or an iOS custom
@@ -81,7 +81,7 @@ const nextConfig = {
       // everyone. A slug can also be unshared at any time.
       {
         source:
-          "/((?!_next/static|_next/image|icons|fonts|d/|v/|rate|\\.well-known).*)",
+          "/((?!_next/static|_next/image|icons|fonts|d/|v/|\\.well-known).*)",
         headers: [
           {
             key: "Cache-Control",
