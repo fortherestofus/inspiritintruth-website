@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import SocialLinks from "@/components/ui/SocialLinks";
 
 /**
  * Anchors are root-relative ("/#give", not "#give") so they still reach the
@@ -98,6 +99,7 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          <SocialLinks className="-mx-2" linkClassName="text-muted hover:text-ink" />
           <Link
             href="/#download"
             className="rounded-full bg-ink px-5 py-2.5 text-[0.9375rem] font-medium text-bg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-pill"
@@ -130,6 +132,7 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <SocialLinks className="mt-3 -ml-2" linkClassName="text-muted hover:text-ink" />
             <Link
               href="/#download"
               onClick={() => setOpen(false)}

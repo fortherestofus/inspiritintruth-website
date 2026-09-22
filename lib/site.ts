@@ -12,6 +12,12 @@ export const FTROU_APP_URL =
   "https://fortherestofus.app/apps/inspiritintruth/";
 export const FTROU_URL = "https://fortherestofus.app/";
 
+/** Social accounts, shown as icons in the nav and footer. */
+export const SOCIAL_LINKS = [
+  { key: "instagram", label: "Instagram", handle: "@inspiritintruth_", url: "https://www.instagram.com/inspiritintruth_/" },
+  { key: "tiktok", label: "TikTok", handle: "@inspiritintruth", url: "https://www.tiktok.com/@inspiritintruth" },
+] as const;
+
 export const HELLO_EMAIL = "hello@fortherestofus.app";
 export const LEGAL_EMAIL = "legal@fortherestofus.app";
 

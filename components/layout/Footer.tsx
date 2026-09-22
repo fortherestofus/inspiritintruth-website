@@ -4,6 +4,7 @@
  */
 import Link from "next/link";
 import Image from "next/image";
+import SocialLinks from "@/components/ui/SocialLinks";
 import { FTROU_APP_URL, FTROU_URL, HELLO_EMAIL } from "@/lib/site";
 
 export default function Footer() {
@@ -26,6 +27,10 @@ export default function Footer() {
               A real-life devotional app for imperfect journeys. Faith at the
               pace of a life that already has enough going on.
             </p>
+            <SocialLinks
+              className="mt-5 -ml-2"
+              linkClassName="text-ink-muted hover:bg-white/5 hover:text-ink-text"
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-x-12 gap-y-3 text-[0.9375rem] sm:gap-x-16">
