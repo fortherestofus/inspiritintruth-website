@@ -81,7 +81,7 @@ const nextConfig = {
       // everyone. A slug can also be unshared at any time.
       {
         source:
-          "/((?!_next/static|_next/image|icons|fonts|d/|v/|\\.well-known).*)",
+          "/((?!_next/static|_next/image|icons|fonts|d/|v/|ingest|\\.well-known).*)",
         headers: [
           {
             key: "Cache-Control",
@@ -89,6 +89,22 @@ const nextConfig = {
           },
         ],
       },
+    ];
+  },
+
+  // PostHog, proxied through our own domain. Ad blockers drop requests to
+  // *.posthog.com, so visits from anyone running one were simply missing
+  // (PostHog flagged it as a health warning). /ingest is excluded from the
+  // Cache-Control rule above: these are event posts and flag lookups, not
+  // pages, and the CDN must never hand one visitor's response to another.
+  // Both slash variants are listed because trailingSlash is on and the SDK
+  // requests paths like /ingest/e/ and /ingest/static/web-vitals.js.
+  async rewrites() {
+    return [
+      { source: "/ingest/static/:path*", destination: "https://eu-assets.i.posthog.com/static/:path*" },
+      { source: "/ingest/static/:path*/", destination: "https://eu-assets.i.posthog.com/static/:path*" },
+      { source: "/ingest/:path*/", destination: "https://eu.i.posthog.com/:path*/" },
+      { source: "/ingest/:path*", destination: "https://eu.i.posthog.com/:path*" },
     ];
   },
 

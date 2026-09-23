@@ -22,6 +22,8 @@
  */
 import posthog from "posthog-js";
 
+import { getTrafficSource } from "@/lib/traffic-source";
+
 /**
  * Written here rather than read from an env var, on purpose. A PostHog
  * PROJECT key only permits sending events, and `NEXT_PUBLIC_*` values
@@ -31,11 +33,15 @@ import posthog from "posthog-js";
  * collect nothing. EU cloud; the US host ingests nothing.
  */
 const KEY = "phc_wWTjtN8SbviS5ANvbAEiZmH5dZEVCBodMsbKmE6D2PB8";
-const HOST = "https://eu.i.posthog.com";
+// Our own domain, proxied to PostHog's EU ingest by the rewrites in
+// next.config.mjs — so an ad blocker doesn't silently drop the visit.
+const HOST = "/ingest";
+const UI_HOST = "https://eu.posthog.com";
 
 if (process.env.NODE_ENV === "production") {
   posthog.init(KEY, {
     api_host: HOST,
+    ui_host: UI_HOST,
     // No cookies, no local storage, no banner. See the note above.
     cookieless_mode: "always",
     // Left at the default (capture on page load). `history_change` was
@@ -53,6 +59,8 @@ if (process.env.NODE_ENV === "production") {
     // app's policy says we never do.
     disable_session_recording: true,
     capture_heatmaps: false,
+    // Page-speed numbers (LCP, CLS, INP, FCP) for the Web Vitals tab.
+    capture_performance: { web_vitals: true },
   });
 
   // Fired explicitly rather than left to `capture_pageview`.
@@ -64,3 +72,7 @@ if (process.env.NODE_ENV === "production") {
   // thing being counted here is page loads anyway.
   posthog.capture("$pageview");
 }
+
+// Read the visit's source on first load, before a client-side navigation
+// can drop `?utm_source=` from the URL. The store badges use it later.
+getTrafficSource();

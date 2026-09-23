@@ -34,6 +34,15 @@ export const STORE_LINKS: { ios: string | null; android: string | null } = {
 
 export const APP_IS_LIVE = Boolean(STORE_LINKS.ios || STORE_LINKS.android);
 
+/**
+ * Apple's campaign "provider token" (the `pt=` number). Found in App Store
+ * Connect → Analytics → Acquisition → Campaigns → Generate Campaign Link.
+ * Once set, iOS badge links carry `ct=web-tiktok` etc. and App Store Connect
+ * splits installs by source. Until then Apple ignores campaign tags, so
+ * lib/traffic-source.ts leaves the iOS link as it is.
+ */
+export const APPLE_PROVIDER_TOKEN: string | null = null;
+
 /* ============================================================
    GIVING
    ------------------------------------------------------------

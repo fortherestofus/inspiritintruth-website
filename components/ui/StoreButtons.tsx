@@ -17,6 +17,7 @@ import Image from "next/image";
 import posthog from "posthog-js";
 
 import { STORE_LINKS, APP_IS_LIVE } from "@/lib/site";
+import { getTrafficSource, taggedStoreLink } from "@/lib/traffic-source";
 
 const BADGE_HEIGHT = 48;
 const BADGE_WIDTH = Math.round(BADGE_HEIGHT * 3.375);
@@ -56,11 +57,22 @@ function Badge({
     <a
       href={href}
       target="_blank"
-      rel="noreferrer"
+      // noopener but NOT noreferrer: the store needs to see this site as the
+      // referrer to credit it in App Store Connect's "Web Referrer" report.
+      rel="noopener"
       className="inline-flex transition-transform duration-200 hover:-translate-y-0.5"
       // The one click on this site worth measuring: it is the last thing
       // we can see before an install, which carries no referrer of its own.
-      onClick={() => posthog.capture("store_badge_clicked", { platform })}
+      // The source tag is added at click time, not render time, so server
+      // and client render the same href.
+      onClick={(e) => {
+        const tagged = taggedStoreLink(platform);
+        if (tagged) e.currentTarget.href = tagged;
+        posthog.capture("store_badge_clicked", {
+          platform,
+          source: getTrafficSource() ?? "direct",
+        });
+      }}
     >
       {img}
     </a>
