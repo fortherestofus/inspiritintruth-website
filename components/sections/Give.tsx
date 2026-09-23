@@ -20,6 +20,16 @@ import { ArrowRight, Loader2, Sprout } from "lucide-react";
 import { GIVE } from "@/lib/content";
 import { GIVING, GIVING_SPLIT } from "@/lib/site";
 
+/**
+ * "100,000" everywhere. NOT toLocaleString(): that follows the visitor's
+ * phone settings, so the server rendered "100,000" while a phone set to
+ * South African formatting rendered "100 000" — React saw different text
+ * and threw a hydration error (#418 in PostHog, from TikTok visitors).
+ */
+function formatAmount(n: number): string {
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export default function Give() {
   const [amount, setAmount] = useState<number | "">(GIVING.quickAmounts[1]);
   const [firstName, setFirstName] = useState("");
@@ -44,8 +54,8 @@ export default function Give() {
   const ctaLabel = !value
     ? "Enter a gift amount"
     : !inRange
-      ? `Give ${GIVING.currency}${GIVING.minAmount}–${GIVING.maxAmount.toLocaleString()}`
-      : `Support the work · ${GIVING.currency}${value.toLocaleString()}${recurring ? ` ${frequency}` : ""}`;
+      ? `Give ${GIVING.currency}${GIVING.minAmount}–${formatAmount(GIVING.maxAmount)}`
+      : `Support the work · ${GIVING.currency}${formatAmount(value)}${recurring ? ` ${frequency}` : ""}`;
 
   async function startGift() {
     if (!ready || busy) return;
@@ -254,7 +264,7 @@ export default function Give() {
               >
                 Any amount from {GIVING.currency}
                 {GIVING.minAmount} to {GIVING.currency}
-                {GIVING.maxAmount.toLocaleString()}.
+                {formatAmount(GIVING.maxAmount)}.
               </p>
 
               {/* Keeper */}
