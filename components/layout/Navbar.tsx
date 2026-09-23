@@ -99,9 +99,11 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <SocialLinks className="-mx-2" linkClassName="text-muted hover:text-ink" />
+          <SocialLinks placement="nav" className="-mx-2" linkClassName="text-muted hover:text-ink" />
           <Link
             href="/#download"
+            data-track="get_app_clicked"
+            data-track-placement="nav"
             className="rounded-full bg-ink px-5 py-2.5 text-[0.9375rem] font-medium text-bg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-pill"
           >
             Get the app
@@ -132,9 +134,11 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <SocialLinks className="mt-3 -ml-2" linkClassName="text-muted hover:text-ink" />
+            <SocialLinks placement="mobile_menu" className="mt-3 -ml-2" linkClassName="text-muted hover:text-ink" />
             <Link
               href="/#download"
+              data-track="get_app_clicked"
+              data-track-placement="mobile_menu"
               onClick={() => setOpen(false)}
               className="mt-4 rounded-full bg-ink py-3 text-center font-medium text-bg"
             >

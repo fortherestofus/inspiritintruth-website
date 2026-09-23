@@ -11,6 +11,7 @@ import Link from "next/link";
 import { ArrowLeft, CheckCircle2, CircleAlert } from "lucide-react";
 import { HELLO_EMAIL, GIVING, GIVING_SPLIT } from "@/lib/site";
 import { GIVE } from "@/lib/content";
+import TrackEvent from "@/components/ui/TrackEvent";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +23,9 @@ export const metadata: Metadata = {
 
 type Verdict = "paid" | "failed" | "unknown";
 
-async function verify(reference: string): Promise<{ verdict: Verdict; amount?: string }> {
+async function verify(
+  reference: string,
+): Promise<{ verdict: Verdict; amount?: string; amountValue?: number; recurring?: boolean }> {
   const secret = process.env.PAYSTACK_SECRET_KEY;
   if (!secret || !reference) return { verdict: "unknown" };
 
@@ -39,6 +42,14 @@ async function verify(reference: string): Promise<{ verdict: Verdict; amount?: s
       return {
         verdict: "paid",
         amount: `${GIVING.currency}${(minor / 100).toLocaleString()}`,
+        amountValue: minor / 100,
+        // A Paystack plan on the transaction means it started a recurring
+        // gift. One-off gifts come back with `plan: null` and an empty
+        // `plan_object`, so check for an actual plan code.
+        recurring: Boolean(
+          body.data.plan_object?.plan_code ||
+            (typeof body.data.plan === "string" && body.data.plan),
+        ),
       };
     }
     return { verdict: "failed" };
@@ -55,12 +66,20 @@ export default async function ThanksPage({
   const params = await searchParams;
   // Paystack sends both; they carry the same value.
   const reference = params.reference ?? params.trxref ?? "";
-  const { verdict, amount } = await verify(reference);
+  const { verdict, amount, amountValue, recurring } = await verify(reference);
 
   const paid = verdict === "paid";
 
   return (
     <div className="bg-bg">
+      {/* Counted only after Paystack confirms the payment. Amount only —
+          the giver's name and email never go to PostHog. */}
+      {paid && (
+        <TrackEvent
+          event="gift_completed"
+          properties={{ amount: amountValue ?? null, currency: "ZAR", recurring: recurring ?? false }}
+        />
+      )}
       <article className="mx-auto flex min-h-screen max-w-reading flex-col justify-center px-5 py-24 sm:px-8">
         <span
           className={`flex h-14 w-14 items-center justify-center rounded-full ${

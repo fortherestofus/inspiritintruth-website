@@ -51,10 +51,13 @@ if (process.env.NODE_ENV === "production") {
     // static marketing site where navigation is full page loads anyway,
     // so page-load pageviews are both correct and simpler.
     // Autocapture would record clicks on every element including the
-    // text inside them. The store-badge click is captured explicitly in
-    // components/ui/StoreButtons.tsx, which is the only click that
-    // answers a question we actually have.
+    // text inside them. The clicks we care about are named instead: the
+    // store badges (components/ui/StoreButtons.tsx), the gift flow, and
+    // anything marked `data-track` (see the listener below).
     autocapture: false,
+    // Same reason. The project setting is on for the app, so it has to be
+    // switched off here explicitly or the web SDK picks it up remotely.
+    capture_dead_clicks: false,
     // Nothing here is worth recording someone's screen for, and the
     // app's policy says we never do.
     disable_session_recording: true,
@@ -71,6 +74,27 @@ if (process.env.NODE_ENV === "production") {
   // looks like it works. One explicit call is deterministic, and the
   // thing being counted here is page loads anyway.
   posthog.capture("$pageview");
+
+  // One listener for every element marked `data-track="event_name"`, so
+  // server components (the footer) can be tracked without becoming client
+  // components. `data-track-placement="footer"` becomes { placement:
+  // "footer" }. Only these hand-written attributes are sent — never the
+  // element's text.
+  document.addEventListener(
+    "click",
+    (e) => {
+      const el = (e.target as Element | null)?.closest<HTMLElement>("[data-track]");
+      if (!el) return;
+      const props: Record<string, string> = {};
+      for (const [key, value] of Object.entries(el.dataset)) {
+        if (key.startsWith("track") && key !== "track" && value) {
+          props[key.slice(5).replace(/^./, (c) => c.toLowerCase())] = value;
+        }
+      }
+      posthog.capture(el.dataset.track!, props);
+    },
+    { capture: true },
+  );
 }
 
 // Read the visit's source on first load, before a client-side navigation

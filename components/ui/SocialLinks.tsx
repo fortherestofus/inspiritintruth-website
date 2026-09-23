@@ -19,7 +19,16 @@ const ICONS: Record<(typeof SOCIAL_LINKS)[number]["key"], React.ReactNode> = {
   ),
 };
 
-export default function SocialLinks({ className = "", linkClassName = "" }: { className?: string; linkClassName?: string }) {
+export default function SocialLinks({
+  placement,
+  className = "",
+  linkClassName = "",
+}: {
+  /** Where this row sits, for the `social_clicked` event. */
+  placement: "nav" | "mobile_menu" | "footer";
+  className?: string;
+  linkClassName?: string;
+}) {
   return (
     <div className={`flex items-center gap-1 ${className}`}>
       {SOCIAL_LINKS.map((s) => (
@@ -28,6 +37,9 @@ export default function SocialLinks({ className = "", linkClassName = "" }: { cl
           href={s.url}
           target="_blank"
           rel="noreferrer"
+          data-track="social_clicked"
+          data-track-network={s.key}
+          data-track-placement={placement}
           aria-label={`${s.label} ${s.handle}`}
           title={`${s.label} ${s.handle}`}
           className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${linkClassName}`}

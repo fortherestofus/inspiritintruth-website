@@ -15,6 +15,7 @@
  * checkout URL.
  */
 import { useState } from "react";
+import posthog from "posthog-js";
 import Link from "next/link";
 import { ArrowRight, Loader2, Sprout } from "lucide-react";
 import { GIVE } from "@/lib/content";
@@ -84,6 +85,14 @@ export default function Give() {
         setBusy(false);
         return;
       }
+      // Counted here, once Paystack has accepted it, rather than on the
+      // button tap — a tap that fails validation is not a gift started.
+      // The amount and cadence only; never the name or email above.
+      posthog.capture(
+        "gift_started",
+        { amount: value, currency: "ZAR", recurring, frequency: recurring ? frequency : null },
+        { send_instantly: true },
+      );
       // Hand off to Paystack's hosted checkout.
       window.location.href = data.url;
     } catch {

@@ -28,6 +28,7 @@ export default function Footer() {
               pace of a life that already has enough going on.
             </p>
             <SocialLinks
+              placement="footer"
               className="mt-5 -ml-2"
               linkClassName="text-ink-muted hover:bg-white/5 hover:text-ink-text"
             />
@@ -73,6 +74,8 @@ export default function Footer() {
               </Link>
               <a
                 href={`mailto:${HELLO_EMAIL}`}
+                data-track="contact_clicked"
+                data-track-placement="footer"
                 className="text-ink-muted transition-colors hover:text-ink-text"
               >
                 Contact
