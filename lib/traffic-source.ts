@@ -14,7 +14,7 @@
  * and the value is read once on first load (instrumentation-client.ts)
  * before any `?utm_source=` can drop off the URL.
  */
-import { SITE_URL, STORE_LINKS, APPLE_PROVIDER_TOKEN } from "@/lib/site";
+import { SITE_URL, STORE_LINKS, APPLE_PROVIDER_TOKEN, APP_STORE_CAMPAIGN } from "@/lib/site";
 
 /** Hostname suffix → the label we want to see in the store dashboards. */
 const KNOWN_SOURCES: [string, string][] = [
@@ -106,8 +106,9 @@ export function taggedStoreLink(platform: "ios" | "android"): string | null {
   // untouched until there is one. App Store Connect still credits
   // inspiritintruth.net as a web referrer in the meantime.
   if (!APPLE_PROVIDER_TOKEN) return base;
-  url.searchParams.set("pt", APPLE_PROVIDER_TOKEN);
-  url.searchParams.set("ct", `web-${source ?? "direct"}`.slice(0, 40));
-  url.searchParams.set("mt", "8");
+  // Built by hand so the space in the campaign name becomes %20, as in
+  // Apple's own link — URLSearchParams would write "+", which Apple could
+  // keep as part of the name.
+  return `${base.split("?")[0]}?pt=${APPLE_PROVIDER_TOKEN}&ct=${encodeURIComponent(APP_STORE_CAMPAIGN)}&mt=8`;
   return url.toString();
 }

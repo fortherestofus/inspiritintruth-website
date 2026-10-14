@@ -35,13 +35,20 @@ export const STORE_LINKS: { ios: string | null; android: string | null } = {
 export const APP_IS_LIVE = Boolean(STORE_LINKS.ios || STORE_LINKS.android);
 
 /**
- * Apple's campaign "provider token" (the `pt=` number). Found in App Store
- * Connect → Analytics → Acquisition → Campaigns → Generate Campaign Link.
- * Once set, iOS badge links carry `ct=web-tiktok` etc. and App Store Connect
- * splits installs by source. Until then Apple ignores campaign tags, so
- * lib/traffic-source.ts leaves the iOS link as it is.
+ * Apple's campaign "provider token" (the `pt=` number), from the campaign
+ * link Alroy generated in App Store Connect on 2026-10-14. It identifies the
+ * developer ACCOUNT, so tapa's link carries the same one. Public by design.
  */
-export const APPLE_PROVIDER_TOKEN: string | null = null;
+export const APPLE_PROVIDER_TOKEN: string | null = "129230101";
+
+/**
+ * The App Store Connect campaign every iOS badge tap is credited to,
+ * exactly as created there. ONE name rather than `web-<source>`: Apple
+ * hides a campaign until 5 people have downloaded through it, so per-source
+ * buckets would stay empty at this volume. The source still reaches PostHog
+ * on `store_badge_clicked`.
+ */
+export const APP_STORE_CAMPAIGN = "PostHog (ISIT)";
 
 /* ============================================================
    GIVING
