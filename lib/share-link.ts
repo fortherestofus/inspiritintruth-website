@@ -22,11 +22,64 @@
 const SHARE_LINK_FN =
   "https://xjhkvphnxzuqookjqkjc.supabase.co/functions/v1/share-link";
 
+/**
+ * SHARE-LINK OPENS, counted anonymously (2026-10-14).
+ *
+ * These routes are server handlers, so the browser PostHog script never
+ * runs on them and a link someone opened was invisible, which left the
+ * growth loop (share, open, install, sign up) unmeasurable at its first
+ * step. This sends ONE server-side event per request.
+ *
+ * What it carries, and nothing else: whether it was a devotional or a verse
+ * link, and a coarse class of who asked ("preview" = a chat app or social
+ * crawler building the link card; "ios" / "android" / "desktop" = a person).
+ * NOT the slug or reference (a slug identifies one devotional, and so one
+ * sender), NOT the IP, NOT the user-agent string. `$process_person_profile:
+ * false` means no person is created, and the id is random per request, so
+ * it cannot be joined to anyone. Same public project key as the browser
+ * script (a PostHog project key can only send events). Fire-and-forget: the
+ * reader's page never waits on analytics, and a failure is silent.
+ */
+const POSTHOG_KEY = "phc_wWTjtN8SbviS5ANvbAEiZmH5dZEVCBodMsbKmE6D2PB8";
+const POSTHOG_CAPTURE = "https://eu.i.posthog.com/capture/";
+
+function visitorClass(ua: string): "preview" | "ios" | "android" | "desktop" {
+  if (/bot|crawler|spider|preview|facebookexternalhit|whatsapp|slack|telegram|discord|twitter|linkedin|skype|embedly|quora|pinterest/i.test(ua)) {
+    return "preview";
+  }
+  if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+  if (/Android/i.test(ua)) return "android";
+  return "desktop";
+}
+
+function recordOpen(kind: "d" | "v", ua: string): void {
+  try {
+    void fetch(POSTHOG_CAPTURE, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        api_key: POSTHOG_KEY,
+        event: "share_link_opened",
+        distinct_id: crypto.randomUUID(),
+        properties: {
+          kind: kind === "d" ? "devotional" : "verse",
+          visitor: visitorClass(ua),
+          $process_person_profile: false,
+          $lib: "share-link-proxy",
+        },
+      }),
+    }).catch(() => {});
+  } catch {
+    /* analytics must never be the reason a shared link fails */
+  }
+}
+
 export async function proxyShareLink(
   req: Request,
   kind: "d" | "v",
   value: string,
 ): Promise<Response> {
+  recordOpen(kind, req.headers.get("user-agent") ?? "");
   const upstream = await fetch(`${SHARE_LINK_FN}/${kind}/${encodeURIComponent(value)}`, {
     headers: {
       "user-agent": req.headers.get("user-agent") ?? "",
