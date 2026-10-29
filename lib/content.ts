@@ -157,7 +157,7 @@ export const DUO = {
   video: "/media/iphone-duo.mp4",
   poster: "/media/iphone-duo-poster.webp",
   videoLabel:
-    "InSpiritInTruth on iPhone Duo: the phone unfolds to two panes, turns upright, switches to dark mode and closes on the wordmark.",
+    "InSpiritInTruth on iPhone Duo, in real captures of version 1.8: the phone unfolds to two panes, opens a devotional, switches to dark mode, turns upright and closes on the wordmark.",
 } as const;
 
 /** HOW OUR DEVOTIONS ARE MADE — the transparency section. */
