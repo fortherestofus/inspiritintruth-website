@@ -145,6 +145,21 @@ export const INSIDE = [
   },
 ] as const;
 
+/**
+ * iPhone Duo. 1.7 already runs full screen on both displays (built with
+ * Xcode 27.1); the two-pane layout is on main and ships in 1.8, so the copy
+ * says which is which rather than claiming the split today.
+ */
+export const DUO = {
+  eyebrow: "iPhone Duo",
+  title: "Made for the fold.",
+  body: "InSpiritInTruth fills both screens of iPhone Duo. From version 1.8, open it wide and it splits into two panes at the fold.",
+  video: "/media/iphone-duo.mp4",
+  poster: "/media/iphone-duo-poster.webp",
+  videoLabel:
+    "InSpiritInTruth on iPhone Duo: the phone unfolds to two panes, turns upright, switches to dark mode and closes on the wordmark.",
+} as const;
+
 /** HOW OUR DEVOTIONS ARE MADE — the transparency section. */
 export const HOW_MADE = {
   eyebrow: "How our devotions are made",
